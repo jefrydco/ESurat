@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--<data>-->
+        <!--<variable-->
+            <!--name="encyclopedia"-->
+            <!--type="in.tandur.tandurin.encyclopedia.EncyclopediaModel"/>-->
+    <!--</data>-->
+
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.HomeDetail">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/activity_home_detail_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <!--<ImageView
+                android:id="@+id/activity_home_detail_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="center"
+                app:layout_collapseMode="parallax" />-->
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/activity_home_detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/activity_home_detail_nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp"
+            >
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--TextView No Agenda-->
+                <TextView
+                    android:id="@+id/activity_home_detail_textView_noAgenda"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@{encyclopedia.noAgenda}"
+                    app:layout_constraintBottom_toTopOf="@+id/activity_home_detail_textView_noAgenda"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Nomor Agenda"
+                    tools:ignore="NotSibling" />
+
+                <!--TextView No Surat-->
+                <TextView
+                    android:id="@+id/activity_home_detail_textView_noSurat"
+                    android:layout_width="0dp"
+                    android:layout_height="18dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@{encyclopedia.noSurat}"
+                    android:textStyle="italic"
+                    app:layout_constraintBottom_toTopOf="@+id/activity_home_detail_textView_sifat"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_noAgenda"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_noAgenda"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_noAgenda"
+                    tools:text="No Surat" />
+
+                <!--TextView Sifat-->
+                <TextView
+                    android:id="@+id/activity_home_detail_textView_sifat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{encyclopedia.sifat}"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_noSurat"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_noSurat"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_noSurat"
+                    tools:text="Sifat" />
+
+                <!--TextView Tanggal Surat-->
+                <TextView
+                    android:id="@+id/activity_home_detail_textView_tanggalSurat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{encyclopedia.tanggalSurat}"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_sifat"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_sifat"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_sifat"
+                    tools:text="Tanggal Surat" />
+
+                <!--TextView Tanggal Terima-->
+                <TextView
+                    android:id="@+id/activity_home_detail_textView_tanggalTerima"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{encyclopedia.tanggalTerima}"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_tanggalSurat"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_tanggalSurat"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_tanggalSurat"
+                    tools:text="Tanggal Terima" />
+
+                <!--TextView Dari-->
+                <TextView
+                    android:id="@+id/activity_home_detail_textView_dari"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{encyclopedia.dari}"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_tanggalTerima"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_tanggalTerima"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_tanggalTerima"
+                    tools:text="Tanggal Terima" />
+
+                <!--TextView Keterangan-->
+                <TextView
+                    android:id="@+id/activity_home_detail_textView_keterangan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{encyclopedia.keterangan}"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_dari"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_dari"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_dari"
+                    tools:text="Keterangan" />
+
+                <!--TextView Status-->
+                <TextView
+                    android:id="@+id/activity_home_detail_textView_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{encyclopedia.status}"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_keterangan"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_keterangan"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_keterangan"
+                    tools:text="Status" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+
+</layout>

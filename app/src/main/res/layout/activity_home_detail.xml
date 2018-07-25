@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>-->
-        <!--<variable-->
-            <!--name="encyclopedia"-->
-            <!--type="in.tandur.tandurin.encyclopedia.EncyclopediaModel"/>-->
-    <!--</data>-->
+    <data>
+        <variable
+            name="home"
+            type="com.example.esurat.home.HomeModel"/>
+    </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,7 +32,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:text="@{encyclopedia.noAgenda}"
             android:textStyle="italic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_judul"
@@ -54,7 +53,6 @@
             android:layout_height="18dp"
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
-            android:text="@{encyclopedia.noSurat}"
             android:textStyle="italic"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="94dp"
@@ -74,7 +72,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.sifat}"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="120dp"
             tools:text="Sifat" />
@@ -93,7 +90,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.tanggalSurat}"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="148dp"
             tools:text="Tanggal Surat" />
@@ -112,7 +108,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.tanggalTerima}"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="176dp"
             tools:text="Tanggal Terima" />
@@ -131,7 +126,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.dari}"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="206dp"
             tools:text="Dari" />
@@ -150,7 +144,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.keterangan}"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="236dp"
             tools:text="Keterangan" />
@@ -170,7 +163,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.status}"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="265dp"

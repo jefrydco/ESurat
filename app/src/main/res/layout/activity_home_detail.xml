@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>-->
-        <!--<variable-->
-            <!--name="encyclopedia"-->
-            <!--type="in.tandur.tandurin.encyclopedia.EncyclopediaModel"/>-->
-    <!--</data>-->
+    <data>
+        <variable
+            name="home"
+            type="com.example.esurat.home.HomeModel"/>
+    </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             android:textAlignment="center"
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Pengisihan data peduli HAM Kota Madiun tahun 2018" />
@@ -27,16 +28,14 @@
         <!--TextView No Agenda-->
         <TextView
             android:id="@+id/activity_home_detail_textView_noAgenda"
-            android:layout_width="0dp"
+            android:layout_width="105dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:gravity="center_vertical"
-            android:text="@{encyclopedia.noAgenda}"
             android:textStyle="italic"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_judul"
             tools:ignore="NotSibling"
+            tools:layout_editor_absoluteX="16dp"
             tools:text="Nomor Agenda" />
 
         <TextView
@@ -52,12 +51,12 @@
             android:id="@+id/activity_home_detail_textView_noSurat"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:text="@{encyclopedia.noSurat}"
             android:textStyle="italic"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="94dp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_noAgenda"
+            app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_noAgenda"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_noAgenda"
             tools:text="No Surat" />
 
         <TextView
@@ -65,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBaseline_toBaselineOf="@+id/activity_home_detail_textView_noSurat"
-            tools:layout_editor_absoluteX="173dp"
+            tools:layout_editor_absoluteX="171dp"
             tools:text="Dummy No Surat" />
 
         <!--TextView Sifat-->
@@ -73,10 +72,10 @@
             android:id="@+id/activity_home_detail_textView_sifat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.sifat}"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="120dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_noSurat"
+            app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_noSurat"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_noSurat"
             tools:text="Sifat" />
 
         <TextView
@@ -84,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBaseline_toBaselineOf="@+id/activity_home_detail_textView_sifat"
-            tools:layout_editor_absoluteX="173dp"
+            tools:layout_editor_absoluteX="171dp"
             tools:text="Dummy Sifat" />
 
         <!--TextView Tanggal Surat-->
@@ -92,10 +91,10 @@
             android:id="@+id/activity_home_detail_textView_tanggalSurat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.tanggalSurat}"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="148dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_sifat"
+            app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_sifat"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_sifat"
             tools:text="Tanggal Surat" />
 
         <TextView
@@ -111,10 +110,10 @@
             android:id="@+id/activity_home_detail_textView_tanggalTerima"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.tanggalTerima}"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="176dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_tanggalSurat"
+            app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_tanggalSurat"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_tanggalSurat"
             tools:text="Tanggal Terima" />
 
         <TextView
@@ -122,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="16dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/activity_home_detail_textView_tanggalTerima"
-            tools:layout_editor_absoluteX="174dp"
+            tools:layout_editor_absoluteX="171dp"
             tools:text="Dummy Tanggal Terima" />
 
         <!--TextView Dari-->
@@ -130,10 +129,10 @@
             android:id="@+id/activity_home_detail_textView_dari"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.dari}"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="206dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_tanggalTerima"
+            app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_tanggalTerima"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_tanggalTerima"
             tools:text="Dari" />
 
         <TextView
@@ -141,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBaseline_toBaselineOf="@+id/activity_home_detail_textView_dari"
-            tools:layout_editor_absoluteX="169dp"
+            tools:layout_editor_absoluteX="171dp"
             tools:text="Dummy Dari" />
 
         <!--TextView Keterangan-->
@@ -149,19 +148,18 @@
             android:id="@+id/activity_home_detail_textView_keterangan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.keterangan}"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="236dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_dari"
+            app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_dari"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_dari"
             tools:text="Keterangan" />
 
         <TextView
             android:id="@+id/activity_home_detail_textView_dummy_keterangan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/activity_home_detail_textView_keterangan"
-            app:layout_constraintStart_toEndOf="@+id/activity_home_detail_textView_keterangan"
+            tools:layout_editor_absoluteX="171dp"
             tools:text="Dummy Keterangan" />
 
         <!--TextView Status-->
@@ -169,20 +167,19 @@
             android:id="@+id/activity_home_detail_textView_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{encyclopedia.status}"
+            android:layout_marginTop="8dp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="265dp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_home_detail_textView_keterangan"
+            app:layout_constraintStart_toStartOf="@+id/activity_home_detail_textView_keterangan"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_keterangan"
             tools:text="Status" />
 
         <TextView
             android:id="@+id/activity_home_detail_textView_dummy_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="112dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/activity_home_detail_textView_status"
-            app:layout_constraintStart_toEndOf="@+id/activity_home_detail_textView_status"
+            tools:layout_editor_absoluteX="171dp"
             tools:text="Dummy Status" />
 
         <Button

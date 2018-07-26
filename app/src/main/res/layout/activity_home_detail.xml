@@ -52,10 +52,11 @@
             android:layout_width="0dp"
             android:layout_height="18dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:textStyle="italic"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="94dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_noAgenda"
             tools:text="No Surat" />
 
         <TextView
@@ -72,8 +73,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="120dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_noSurat"
             tools:text="Sifat" />
 
         <TextView
@@ -90,8 +92,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="148dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_sifat"
             tools:text="Tanggal Surat" />
 
         <TextView
@@ -108,8 +111,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="176dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_tanggalSurat"
             tools:text="Tanggal Terima" />
 
         <TextView
@@ -126,8 +130,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="206dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_tanggalTerima"
             tools:text="Dari" />
 
         <TextView
@@ -144,8 +149,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="236dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_dari"
             tools:text="Keterangan" />
 
         <TextView
@@ -163,9 +169,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="265dp"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_keterangan"
             tools:text="Status" />
 
         <TextView
@@ -179,13 +186,24 @@
 
         <Button
             android:id="@+id/activity_home_detail_button_lihatSurat"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="@string/button_lihatSurat"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
-            tools:layout_editor_absoluteX="29dp"
-            tools:layout_editor_absoluteY="377dp" />
+            android:drawableLeft="@drawable/ic_chrome_reader_mode_black_24dp"
+            android:text="@string/button_lihatSurat"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_textView_status"
+            tools:layout_editor_absoluteX="16dp" />
 
+        <Button
+            android:id="@+id/activity_home_detail_button_uploadFile"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_file_upload_black_24dp"
+            android:text="@string/button_uploadFile"
+            app:layout_constraintTop_toBottomOf="@+id/activity_home_detail_button_lihatSurat"
+            tools:layout_editor_absoluteX="16dp" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -83,12 +83,12 @@
                 android:id="@+id/item_home_textView_status"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
-                android:textColor="#C62828"
-                app:layout_constraintBaseline_toBaselineOf="@+id/item_home_textView_dari"
+                android:textColor="#1565C0"
                 app:layout_constraintEnd_toEndOf="@+id/item_home_textView_tanggalTerima"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/item_home_textView_tanggalTerima"
-                tools:text="PROSES" />
+                tools:layout_editor_absoluteY="63dp"
+                tools:text="SELESAI" />
 
             <View
                 android:id="@+id/view"
@@ -96,11 +96,10 @@
                 android:layout_height="0.5dp"
                 android:layout_marginTop="8dp"
                 android:background="@android:color/darker_gray"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_home_imageView_thumbnail" />
+                app:layout_constraintTop_toBottomOf="@+id/item_home_textView_dari" />
 
         </android.support.constraint.ConstraintLayout>
 

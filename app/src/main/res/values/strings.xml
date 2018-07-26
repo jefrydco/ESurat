@@ -10,12 +10,12 @@
     <string name="button_lihatSurat">Lihat Surat</string>
     <string name="button_uploadFile">Upload File</string>
     <string name="search_home">Cari Surat</string>
-    <!--    <string name="re_enter_password">Re-enter Password</string>
+<!--<string name="re_enter_password">Re-enter Password</string>
         <string name="mobile_number">Mobile Number</string>
-        <string name="address">Address</string> tak hapusi ya ini lak buat signup sih?
+        <string name="address">Address</string>
         <string name="name">Name</string>
         <string name="create_account">Create Account</string>
-        <string name="already_a_member_login">Already a member? Login</string>-->
-    <!--<string name="no_account_yet_create_one">No account yet? Create one</string>-->
+        <string name="already_a_member_login">Already a member? Login</string>
+        <string name="no_account_yet_create_one">No account yet? Create one</string>-->
 
 </resources>

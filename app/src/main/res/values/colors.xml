@@ -14,4 +14,9 @@
   <color name="base">#AAAAAA</color>
   <color name="iron">#CCCCCC</color>
   <color name="white">#FFFFFF</color>
+
+  <color name="error">#FF5252</color>
+  <color name="info">#2196F3</color>
+  <color name="warning">#FFC107</color>
+  <color name="success">#4CAF50</color>
 </resources>

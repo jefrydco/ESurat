@@ -4,7 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 
-public class HomeModel implements SortedListAdapter.ViewModel {
+import java.util.Locale;
+
+public class HomeModel extends BaseModel implements SortedListAdapter.ViewModel {
     private final int mId;
     private final int mRank;
     private final String mPerihal;
@@ -100,5 +102,36 @@ public class HomeModel implements SortedListAdapter.ViewModel {
                             otherHomeModel.mPerihal == null);
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                Locale.US,
+                    "ID: %s\n" +
+                    "Rank: %s\n" +
+                    "Perihal: %s\n" +
+                    "Dari: %s\n" +
+                    "Tanggal Terima: %s\n" +
+                    "Status: %s\n" +
+                    "NoAgenda: %s\n" +
+                    "No Surat: %s\n" +
+                    "Sifat: %s\n" +
+                    "Tanggal Surat: %s\n" +
+                    "Keterangan: %s\n" +
+                    "Link Surat: %s",
+                String.valueOf(mId),
+                String.valueOf(mRank),
+                mPerihal,
+                mDari,
+                mTanggalTerima,
+                mStatus,
+                mNoAgenda,
+                mNoSurat,
+                mSifat,
+                mTanggalSurat,
+                mKeterangan,
+                mLinkLihatSurat
+        );
     }
 }

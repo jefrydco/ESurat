@@ -11,6 +11,17 @@
     <string name="button_uploadFile">Upload File</string>
     <string name="search_home">Cari Surat</string>
     <string name="button_statusSelesai">Selesai</string>
+
+    <string name="perihal">Perihal</string>
+    <string name="dari">Dari</string>
+    <string name="tanggal_terima">TanggalTerima</string>
+    <string name="status">Status</string>
+    <string name="no_agenda">NoAgenda</string>
+    <string name="no_surat">NoSurat</string>
+    <string name="sifat">Sifat</string>
+    <string name="tanggal_surat">TanggalSurat</string>
+    <string name="keterangan">Keterangan</string>
+
 <!--<string name="re_enter_password">Re-enter Password</string>
         <string name="mobile_number">Mobile Number</string>
         <string name="address">Address</string>

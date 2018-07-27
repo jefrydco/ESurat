@@ -3,6 +3,7 @@ package com.example.esurat.home;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +18,19 @@ import android.widget.Toast;
 
 import com.example.esurat.R;
 import com.example.esurat.databinding.ActivityHomeBinding;
+import com.example.esurat.utils.DataUtils;
+import com.example.esurat.utils.DateUtils;
 import com.example.esurat.utils.NetworkUtils;
 import com.example.esurat.utils.RecyclerItemClickSupportUtils;
+import com.example.esurat.utils.ULID;
 import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +39,9 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
+
+    private ULID ulid = new ULID();
+    private Calendar calendar = Calendar.getInstance();
 
     private HomeService mHomeService;
     private Call<String> mCall;
@@ -120,6 +130,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
         mHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
         mHomeAdapter = new HomeAdapter(this, HomeModel.class, COMPARATOR);
@@ -128,8 +140,15 @@ public class HomeActivity extends AppCompatActivity {
 
         RecyclerItemClickSupportUtils.addTo(mHomeBinding.activityHomeRecyclerView).setOnItemClickListener(((recyclerView, position, v) -> {
             HomeModel currentHomeModel = mHomeModelList.get(position);
-            Toast.makeText(this, currentHomeModel.getPerihal(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, currentHomeModel.getPerihal(), Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "\nonCreate: HomeModel\nPosition: " + position + "\n" + currentHomeModel.toString());
+            Intent intentToHomeDetailActivity = new Intent(this, HomeDetailActivity.class);
+            intentToHomeDetailActivity.putExtra("home", currentHomeModel);
+            startActivity(intentToHomeDetailActivity);
         }));
+
+        mHomeModelList = generateHomeModelList(30);
+        mHomeAdapter.edit().replaceAll(mHomeModelList).commit();
 
         mHomeBinding.activityHomeRecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
@@ -137,9 +156,9 @@ public class HomeActivity extends AppCompatActivity {
         mHomeBinding.activityHomeRecyclerView
                 .setAdapter(mHomeAdapter);
 
-        mHomeService = (HomeService) NetworkUtils.fetch(HomeService.class);
-        mCall = mHomeService.getHomeList();
-        mCall.enqueue(mCallback);
+//        mHomeService = (HomeService) NetworkUtils.fetch(HomeService.class);
+//        mCall = mHomeService.getHomeList();
+//        mCall.enqueue(mCallback);
     }
 
     @Override
@@ -180,10 +199,6 @@ public class HomeActivity extends AppCompatActivity {
             final String noSurat = String.valueOf(homeModel.getNoSurat()).toLowerCase();
             final String sifat = String.valueOf(homeModel.getSifat()).toLowerCase();
             final String tanggalSurat = String.valueOf(homeModel.getTanggalSurat()).toLowerCase();
-/*
-            final String klasifikasi = String.valueOf(homeModel.getKlasifikasi()).toLowerCase();
-            TODO: Tambahin sendiri yaaa...
-*/
 
             if (id.contains(lowerCaseQuery) ||
                     rank.contains(lowerCaseQuery) ||
@@ -199,5 +214,46 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return filteredHomeModelList;
+    }
+
+    private List<HomeModel> generateHomeModelList(int count) {
+        List<HomeModel> homeModelList = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            String[] status = {"PROSES", "SELESAI"};
+            Random random = new Random();
+            int selectedIndex = random.nextInt(status.length);
+
+            calendar.add(Calendar.DATE, 1);
+
+            homeModelList.add(new HomeModel(
+                    i,
+                    i,
+                    String.format(
+                            Locale.US,
+                            "%s %d",
+                            DataUtils.toSentenceCase(DataUtils.generateRandomWords(2)),
+                            i),
+                    String.format(
+                            Locale.US,
+                            "%s %d",
+                            DataUtils.toSentenceCase(DataUtils.generateRandomWords(2)),
+                            i),
+                    DateUtils.formatDate(calendar.getTimeInMillis()),
+                    status[selectedIndex],
+                    String.valueOf(i),
+                    ulid.nextULID(),
+                    ulid.nextULID(),
+                    DateUtils.formatDate(calendar.getTimeInMillis()),
+                    String.format(
+                            Locale.US,
+                            "%s %d",
+                            DataUtils.toSentenceCase(DataUtils.generateRandomWords(5)),
+                            i),
+                    "http://eprints.dinus.ac.id/14315/1/contoh_steppingstone.pdf")
+            );
+        }
+
+        return homeModelList;
     }
 }

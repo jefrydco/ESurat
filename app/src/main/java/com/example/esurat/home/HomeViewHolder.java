@@ -1,27 +1,36 @@
 package com.example.esurat.home;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.View;
+import android.support.v4.content.ContextCompat;
 
-import com.bumptech.glide.request.RequestOptions;
+import com.example.esurat.R;
 import com.example.esurat.databinding.ItemHomeBinding;
 import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-
 public class HomeViewHolder extends SortedListAdapter.ViewHolder<HomeModel> {
     private ItemHomeBinding mItemHomeBinding;
+    private Context context;
 
-    HomeViewHolder(ItemHomeBinding mItemEncylopediaBinding) {
+    HomeViewHolder(Context context, ItemHomeBinding mItemEncylopediaBinding) {
         super(mItemEncylopediaBinding.getRoot());
         this.mItemHomeBinding = mItemEncylopediaBinding;
+        this.context = context;
     }
 
     @Override
     protected void performBind(@NonNull HomeModel item) {
-        mItemHomeBinding.itemHomeTextViewDari.setText(item.getDari());
-        mItemHomeBinding.itemHomeTextViewJudul.setText(item.getPerihal());
-        mItemHomeBinding.itemHomeTextViewStatus.setText(item.getStatus());
-        mItemHomeBinding.itemHomeTextViewTanggalTerima.setText(item.getTanggalTerima());
+        switch (item.getStatus()) {
+            case "PROSES":
+                mItemHomeBinding.itemHomeTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.error));
+                break;
+            case "SELESAI":
+                mItemHomeBinding.itemHomeTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.success));
+                break;
+            default:
+                mItemHomeBinding.itemHomeTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.error));
+                break;
+        }
+        mItemHomeBinding.setHome(item);
     }
 }

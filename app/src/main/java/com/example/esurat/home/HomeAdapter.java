@@ -12,14 +12,17 @@ import java.util.Comparator;
 
 public class HomeAdapter extends SortedListAdapter<HomeModel> {
 
-    public HomeAdapter(@NonNull Context context, @NonNull Class<HomeModel> itemClass, @NonNull Comparator<HomeModel> comparator) {
+    private Context context;
+
+    HomeAdapter(@NonNull Context context, @NonNull Class<HomeModel> itemClass, @NonNull Comparator<HomeModel> comparator) {
         super(context, HomeModel.class, comparator);
+        this.context = context;
     }
 
     @NonNull
     @Override
     protected ViewHolder<? extends HomeModel> onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, int viewType) {
         final ItemHomeBinding itemHomeBinding = ItemHomeBinding.inflate(inflater, parent, false);
-        return new HomeViewHolder(itemHomeBinding);
+        return new HomeViewHolder(context, itemHomeBinding);
     }
 }

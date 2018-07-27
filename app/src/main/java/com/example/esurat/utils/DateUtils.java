@@ -19,22 +19,22 @@ public class DateUtils {
      * Gets timestamp in millis and converts it to HH:mm (e.g. 16:44).
      */
     public static String formatTime(long timeInMillis) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", new Locale("id"));
         return dateFormat.format(timeInMillis);
     }
 
     public static String formatTimeWithMarker(long timeInMillis) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a", new Locale("id"));
         return dateFormat.format(timeInMillis);
     }
 
     public static int getHourOfDay(long timeInMillis) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("H", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("H", new Locale("id"));
         return Integer.valueOf(dateFormat.format(timeInMillis));
     }
 
     public static int getMinute(long timeInMillis) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("m", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("m", new Locale("id"));
         return Integer.valueOf(dateFormat.format(timeInMillis));
     }
 
@@ -56,7 +56,7 @@ public class DateUtils {
      * Formats timestamp to 'date month' format (e.g. 'February 3').
      */
     public static String formatDate(long timeInMillis) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM YYYY", new Locale("id"));
         return dateFormat.format(timeInMillis);
     }
 
@@ -64,7 +64,7 @@ public class DateUtils {
      * Returns whether the given date is today, based on the user's current locale.
      */
     public static boolean isToday(long timeInMillis) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", new Locale("id"));
         String date = dateFormat.format(timeInMillis);
         return date.equals(dateFormat.format(System.currentTimeMillis()));
     }
@@ -76,7 +76,7 @@ public class DateUtils {
      * @return  Whether {@param millisFirst} and {@param millisSecond} are off the same day.
      */
     public static boolean hasSameDate(long millisFirst, long millisSecond) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", new Locale("id"));
         return dateFormat.format(millisFirst).equals(dateFormat.format(millisSecond));
     }
 }

@@ -146,8 +146,8 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
 
-        final MenuItem menuEncyclopediaSearch = menu.findItem(R.id.menu_home_search);
-        final SearchView searchView = (SearchView) menuEncyclopediaSearch.getActionView();
+        final MenuItem menuHomeSearch = menu.findItem(R.id.menu_home_search);
+        final SearchView searchView = (SearchView) menuHomeSearch.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -156,9 +156,9 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                final List<HomeModel> filteredEncyclopediaModelList = filterEncyclopediaModelList(mHomeModelList, query);
+                final List<HomeModel> filteredHomeModelList = filterHomeModelList(mHomeModelList, query);
                 mHomeAdapter.edit()
-                        .replaceAll(filteredEncyclopediaModelList)
+                        .replaceAll(filteredHomeModelList)
                         .commit();
                 return true;
             }
@@ -166,21 +166,38 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
-    private List<HomeModel> filterEncyclopediaModelList(List<HomeModel> mEncyclopediaModelList, String query) {
+    private List<HomeModel> filterHomeModelList(List<HomeModel> mHomeModelList, String query) {
         final String lowerCaseQuery = query.toLowerCase();
 
-        final List<HomeModel> filteredEncyclopediaModelList = new ArrayList<>();
-        for (HomeModel homeModel: mEncyclopediaModelList) {
+        final List<HomeModel> filteredHomeModelList = new ArrayList<>();
+        for (HomeModel homeModel: mHomeModelList) {
             final String id = String.valueOf(homeModel.getId()).toLowerCase();
             final String rank = String.valueOf(homeModel.getRank()).toLowerCase();
-            // TODO: Tambahin sendiri yaaa...
+            final String dari = String.valueOf(homeModel.getDari()).toLowerCase();
+            final String perihal = String.valueOf(homeModel.getPerihal()).toLowerCase();
+            final String tanggalTerima = String.valueOf(homeModel.getTanggalTerima()).toLowerCase();
+            final String status = String.valueOf(homeModel.getStatus()).toLowerCase();
+            final String noSurat = String.valueOf(homeModel.getNoSurat()).toLowerCase();
+            final String sifat = String.valueOf(homeModel.getSifat()).toLowerCase();
+            final String tanggalSurat = String.valueOf(homeModel.getTanggalSurat()).toLowerCase();
+/*
+            final String klasifikasi = String.valueOf(homeModel.getKlasifikasi()).toLowerCase();
+            TODO: Tambahin sendiri yaaa...
+*/
 
             if (id.contains(lowerCaseQuery) ||
-                    rank.contains(lowerCaseQuery)) {
-                filteredEncyclopediaModelList.add(homeModel);
+                    rank.contains(lowerCaseQuery) ||
+                    dari.contains(lowerCaseQuery) ||
+                    perihal.contains(lowerCaseQuery) ||
+                    tanggalTerima.contains(lowerCaseQuery) ||
+                    status.contains(lowerCaseQuery) ||
+                    noSurat.contains(lowerCaseQuery) ||
+                    sifat.contains(lowerCaseQuery) ||
+                    tanggalSurat.contains(lowerCaseQuery)) {
+                filteredHomeModelList.add(homeModel);
             }
         }
 
-        return filteredEncyclopediaModelList;
+        return filteredHomeModelList;
     }
 }

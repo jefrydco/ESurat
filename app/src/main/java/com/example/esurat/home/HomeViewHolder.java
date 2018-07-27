@@ -25,7 +25,7 @@ public class HomeViewHolder extends SortedListAdapter.ViewHolder<HomeModel> {
                 mItemHomeBinding.itemHomeTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.error));
                 break;
             case "SELESAI":
-                mItemHomeBinding.itemHomeTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.success));
+                mItemHomeBinding.itemHomeTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.info));
                 break;
             default:
                 mItemHomeBinding.itemHomeTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.error));

@@ -26,10 +26,10 @@ public class HomeDetailActivity extends AppCompatActivity {
 
         switch (homeModel.getStatus()) {
             case "PROSES":
-                mHomeDetailBinding.activityHomeDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(this, R.color.info));
+                mHomeDetailBinding.activityHomeDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(this, R.color.error));
                 break;
             case "SELESAI":
-                mHomeDetailBinding.activityHomeDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(this, R.color.success));
+                mHomeDetailBinding.activityHomeDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(this, R.color.info));
                 break;
             default:
                 mHomeDetailBinding.activityHomeDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(this, R.color.error));

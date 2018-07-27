@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <data>
-
+    <data>
         <variable
             name="home"
-            type="in.tandur.tandurin.home.homeModel"/>
+            type="com.example.esurat.home.HomeModel"/>
 
-    </data>-->
+    </data>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -21,27 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!--        <ImageView
-            android:id="@+id/item_home_imageView_thumbnail"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/home_image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:src="@drawable/ic_local_florist_pink_64dp"/>-->
-
             <TextView
                 android:id="@+id/item_home_textView_judul"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@{home.judul}"
+                android:text="@{home.perihal}"
                 android:textAlignment="viewStart"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:textColor="@color/black"
@@ -58,7 +43,6 @@
                 android:layout_height="21dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@{home.tanggalTerima}"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="@+id/item_home_textView_judul"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,6 +57,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:textColor="#757575"
+                android:text="@{home.dari}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/item_home_textView_judul"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -86,6 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
                 android:textColor="#C62828"
+                android:text="@{home.status}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/item_home_textView_dari"
                 app:layout_constraintEnd_toEndOf="@+id/item_home_textView_tanggalTerima"
                 app:layout_constraintHorizontal_bias="1.0"

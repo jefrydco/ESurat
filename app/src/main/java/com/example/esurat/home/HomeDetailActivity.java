@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.esurat.R;
 
-public class HomeDetail extends AppCompatActivity {
+public class HomeDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

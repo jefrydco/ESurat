@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    private static final int REQUEST_SIGNUP = 0;
+    private static final int REQUEST_LOGIN = 0;
 
     @BindView(R.id.input_username)
     EditText _usernameText;
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 //        _signupLink.setOnClickListener(v -> {
 //            // Start the Signup activity
 //            Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-//            startActivityForResult(intent, REQUEST_SIGNUP);
+//            startActivityForResult(intent, REQUEST_LOGIN);
 //            finish();
 //            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 //        });
@@ -82,26 +82,26 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
-        loginService = (LoginService) NetworkUtils.fetch(LoginService.class);
-        call = loginService.login(username, password);
-        call.enqueue(callback);
+//        loginService = (LoginService) NetworkUtils.fetch(LoginService.class);
+//        call = loginService.login(username, password);
+//        call.enqueue(callback);
 
-//        new android.os.Handler().postDelayed(
-//                () -> {
-//                    // On complete call either onLoginSuccess or onLoginFailed
-//                    onLoginSuccess();
-//                    // onLoginFailed();
-//                    progressDialog.dismiss();
-//                }, 3000);
+        new android.os.Handler().postDelayed(
+                () -> {
+                    // On complete call either onLoginSuccess or onLoginFailed
+                    onLoginSuccess();
+                    // onLoginFailed();
+                    progressDialog.dismiss();
+                }, 3000);
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
+        if (requestCode == REQUEST_LOGIN) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
+                // TODO: Implement successful signin logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
             }
@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
         finish();
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     public void onLoginFailed() {

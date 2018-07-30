@@ -17,6 +17,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Toast;
 
 import com.example.esurat.R;
+import com.example.esurat.auth.LoginActivity;
 import com.example.esurat.databinding.ActivityHomeBinding;
 import com.example.esurat.utils.DataUtils;
 import com.example.esurat.utils.DateUtils;
@@ -129,6 +130,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intentToLoginActivity = new Intent(this, LoginActivity.class);
+        startActivity(intentToLoginActivity);
 
         calendar.setTimeInMillis(System.currentTimeMillis());
 
@@ -250,7 +254,7 @@ public class HomeActivity extends AppCompatActivity {
                             "%s %d",
                             DataUtils.toSentenceCase(DataUtils.generateRandomWords(5)),
                             i),
-                    "http://eprints.dinus.ac.id/14315/1/contoh_steppingstone.pdf")
+                    "https://abc.xyz/investor/pdf/2018_Q1_Earnings_Transcript.pdf")
             );
         }
 

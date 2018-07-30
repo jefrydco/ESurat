@@ -16,18 +16,19 @@
     <string name="dari">Dari</string>
     <string name="tanggal_terima">TanggalTerima</string>
     <string name="status">Status</string>
-    <string name="no_agenda">NoAgenda</string>
-    <string name="no_surat">NoSurat</string>
+    <string name="no_agenda">No Agenda</string>
+    <string name="no_surat">No Surat</string>
     <string name="sifat">Sifat</string>
     <string name="tanggal_surat">TanggalSurat</string>
     <string name="keterangan">Keterangan</string>
 
-<!--<string name="re_enter_password">Re-enter Password</string>
-        <string name="mobile_number">Mobile Number</string>
-        <string name="address">Address</string>
-        <string name="name">Name</string>
-        <string name="create_account">Create Account</string>
-        <string name="already_a_member_login">Already a member? Login</string>
-        <string name="no_account_yet_create_one">No account yet? Create one</string>-->
+
+    <!--<string name="re_enter_password">Re-enter Password</string>
+            <string name="mobile_number">Mobile Number</string>
+            <string name="address">Address</string>
+            <string name="name">Name</string>
+            <string name="create_account">Create Account</string>
+            <string name="already_a_member_login">Already a member? Login</string>
+            <string name="no_account_yet_create_one">No account yet? Create one</string>-->
 
 </resources>

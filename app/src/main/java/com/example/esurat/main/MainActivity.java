@@ -3,6 +3,7 @@ package com.example.esurat.main;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.example.esurat.R;
+import com.example.esurat.auth.LoginActivity;
 import com.example.esurat.databinding.ActivityMainBinding;
 import com.example.esurat.model.Surat;
 import com.example.esurat.model.SuratList;
@@ -49,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intentToLoginActivityFromMessageActivity = new Intent(this, LoginActivity.class);
+        startActivity(intentToLoginActivityFromMessageActivity);
+
         mActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setRecyclerViewAdapter();
@@ -132,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         mActivityHomeBinding.activityMainRecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
-//
+
         mActivityHomeBinding.activityMainRecyclerView
                 .setAdapter(mMainAdapter);
     }

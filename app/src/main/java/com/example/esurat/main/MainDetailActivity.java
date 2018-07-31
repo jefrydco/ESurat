@@ -2,6 +2,8 @@ package com.example.esurat.main;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
@@ -16,14 +18,19 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 
 import com.example.esurat.R;
 import com.example.esurat.customtabs.CustomTabActivityHelper;
 import com.example.esurat.databinding.ActivityMainDetailBinding;
+import com.example.esurat.model.Status;
 import com.example.esurat.model.Surat;
+import com.example.esurat.model.SuratList;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import droidninja.filepicker.FilePickerBuilder;
@@ -31,6 +38,9 @@ import droidninja.filepicker.FilePickerConst;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainDetailActivity extends AppCompatActivity {
 
@@ -39,6 +49,8 @@ public class MainDetailActivity extends AppCompatActivity {
 
     private ActivityMainDetailBinding mActivityMainDetailBinding;
     private CustomTabActivityHelper mCustomTabActivityHelper;
+    SuratService service;
+    Surat mSurat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +58,21 @@ public class MainDetailActivity extends AppCompatActivity {
         mActivityMainDetailBinding = DataBindingUtil
                 .setContentView(this, R.layout.activity_main_detail);
 
-        Surat surat = (Surat) getIntent().getSerializableExtra("surat");
-        mActivityMainDetailBinding.setSurat(surat);
+        mSurat = (Surat) getIntent().getSerializableExtra("surat");
+        mActivityMainDetailBinding.setSurat(mSurat);
+        service = ServiceGeneratorUtils.createService(SuratService.class);
 
-        if (surat.getStatus().equals(MainConstant.NEW)) {
+        if (mSurat.getStatus().equals(MainConstant.NEW)) {
             mActivityMainDetailBinding
                     .activityMainDetailTextViewValueStatus
                     .setTextColor(ContextCompat.getColor(this, R.color.error));
         }
-        if (surat.getStatus().equals(MainConstant.PROCESS)) {
+        if (mSurat.getStatus().equals(MainConstant.PROCESS)) {
             mActivityMainDetailBinding
                     .activityMainDetailTextViewValueStatus
                     .setTextColor(ContextCompat.getColor(this, R.color.warning));
         }
-        if (surat.getStatus().equals(MainConstant.DONE)) {
+        if (mSurat.getStatus().equals(MainConstant.DONE)) {
             mActivityMainDetailBinding
                     .activityMainDetailTextViewValueStatus
                     .setTextColor(ContextCompat.getColor(this, R.color.info));
@@ -81,11 +94,14 @@ public class MainDetailActivity extends AppCompatActivity {
         });
 
         mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-                openCustomTabs(surat.getLinkLihatSurat()));
+                openCustomTabs(mSurat.getLinkLihatSurat()));
         mActivityMainDetailBinding.activityMainDetailButtonUploadFile.setOnClickListener(v -> {
             if (isStoragePermissionGranted()) {
                 openFilePicker();
             }
+        });
+        mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setOnClickListener(v -> {
+            setSuratStatus(mActivityMainDetailBinding.getSurat().getId(), "DONE");
         });
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -118,8 +134,8 @@ public class MainDetailActivity extends AppCompatActivity {
             case FilePickerConst.REQUEST_CODE_DOC:
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     Log.d(TAG, "onActivityResult: " + data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS));
-                    String[] selectedDocs = data.getStringArrayExtra(FilePickerConst.KEY_SELECTED_DOCS);
-                    uploadFile(selectedDocs[0]);
+                    ArrayList<String> selectedDocs = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS);
+                    uploadFile(selectedDocs.get(0));
                 }
         }
     }
@@ -205,39 +221,62 @@ public class MainDetailActivity extends AppCompatActivity {
     }
 
     private void uploadFile(String filePath) {
-        // create upload service client
-        SuratService service = ServiceGeneratorUtils.createService(SuratService.class);
-
         Uri fileUri = Uri.parse(filePath);
 
-        // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
-        // use the FileUtils to get the actual file by uri
         File file = new File(filePath);
 
         // create RequestBody instance from file
-        RequestBody requestFile =
-                RequestBody.create(
-                        MediaType.parse(Objects.requireNonNull(getContentResolver().getType(fileUri))),
-                        file
-                );
+        RequestBody requestFile = RequestBody.create(
+                MediaType.parse(getMimeType(fileUri)),
+                file);
 
         // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("document", file.getName(), requestFile);
-
-        Log.d(TAG, "uploadFile: " + body);
+        MultipartBody.Part body = MultipartBody.Part.createFormData(
+                "document",
+                file.getName(),
+                requestFile);
 
         // finally, execute the request
-//        Call<String> call = service.uploadSurat(body);
-//        call.enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-//                Log.d(TAG, "onResponse: Upload success: " + response.body());
-//            }
-//            @Override
-//            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-//                Log.d(TAG, "onFailure: Upload failed: " + t.getLocalizedMessage());
-//            }
-//        });
+        Call<Status> call = service.uploadSurat(body);
+        call.enqueue(new Callback<Status>() {
+            @Override
+            public void onResponse(@NonNull Call<Status> call, @NonNull Response<Status> response) {
+                Log.d(TAG, "onResponse: Upload success: " + response.body().getStatus());
+            }
+            @Override
+            public void onFailure(@NonNull Call<Status> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: Upload failed: " + t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public String getMimeType(Uri uri) {
+        String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
+    }
+
+    private void setSuratStatus(String id, String status) {
+        Call<SuratList> call = service.setStatus(id, status);
+        Context context = this;
+        call.enqueue(new Callback<SuratList>() {
+            @Override
+            public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
+                Log.d(TAG, "onResponse: Set status successfully: " + Objects.requireNonNull(response.body()).getStatus());
+                if (Objects.requireNonNull(response.body()).getStatus().equals("OK")) {
+                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setEnabled(false);
+                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setAlpha(.5f);
+                    mActivityMainDetailBinding.activityMainDetailTextViewValueStatus.setText(Objects.requireNonNull(response.body()).getData().get(0).getStatus());
+                    mActivityMainDetailBinding.activityMainDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(context, R.color.info));
+                    Toast.makeText(MainDetailActivity.this, "Sukses", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainDetailActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuratList> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: Set status failed: " + t.getLocalizedMessage());
+            }
+        });
     }
 }

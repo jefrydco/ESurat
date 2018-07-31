@@ -2,6 +2,8 @@ package com.example.esurat.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.esurat.R;
+import com.example.esurat.model.Status;
+import com.example.esurat.utils.ServiceGeneratorUtils;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,25 +27,29 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_LOGIN = 0;
 
+    ProgressDialog mProgressDialog;
+
     @BindView(R.id.input_username)
     EditText _usernameText;
     @BindView(R.id.input_password) EditText _passwordText;
     @BindView(R.id.btn_login)
     Button _loginButton;
-//    @BindView(R.id.link_signup)
-//    TextView _signupLink;
     LoginService loginService;
-    Call<String> call;
-    Callback<String> callback = new Callback<String>() {
+    Call<Status> call;
+    Callback<Status> callback = new Callback<Status>() {
         @Override
-        public void onResponse(Call<String> call, Response<String> response) {
-            onLoginSuccess();
-            String jsonResponse = response.body();
-            Log.d(TAG, "onResponse: " + jsonResponse);
+        public void onResponse(@NonNull Call<Status> call, @NonNull Response<Status> response) {
+            if (Objects.requireNonNull(response.body()).getStatus().equals("OK")) {
+                onLoginSuccess();
+                mProgressDialog.dismiss();
+            } else {
+                onLoginFailed();
+                mProgressDialog.dismiss();
+            }
         }
 
         @Override
-        public void onFailure(Call<String> call, Throwable t) {
+        public void onFailure(@NonNull Call<Status> call, @NonNull Throwable t) {
 
         }
     };
@@ -50,15 +60,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        _loginButton.setOnClickListener(v -> login());
+        _usernameText.setText("a@a.co");
+        _passwordText.setText("admin123");
+        _loginButton.performClick();
 
-//        _signupLink.setOnClickListener(v -> {
-//            // Start the Signup activity
-//            Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-//            startActivityForResult(intent, REQUEST_LOGIN);
-//            finish();
-//            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-//        });
+        _loginButton.setOnClickListener(v -> login());
     }
 
     public void login() {
@@ -71,27 +77,27 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+        mProgressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("Authenticating...");
+        mProgressDialog.show();
 
         String username = _usernameText.getText().toString();
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
-//        loginService = (LoginService) ServiceGeneratorUtils.fetch(LoginService.class);
-//        call = loginService.login(username, password);
-//        call.enqueue(callback);
+        loginService = (LoginService) ServiceGeneratorUtils.createService(LoginService.class);
+        call = loginService.login(username, password);
+        call.enqueue(callback);
 
-        new android.os.Handler().postDelayed(
-                () -> {
-                    // On complete call either onLoginSuccess or onLoginFailed
-                    onLoginSuccess();
-                    // onLoginFailed();
-                    progressDialog.dismiss();
-                }, 3000);
+//        new android.os.Handler().postDelayed(
+//                () -> {
+//                    // On complete call either onLoginSuccess or onLoginFailed
+//                    onLoginSuccess();
+//                    // onLoginFailed();
+//                    progressDialog.dismiss();
+//                }, 3000);
     }
 
 

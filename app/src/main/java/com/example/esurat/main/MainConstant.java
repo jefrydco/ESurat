@@ -1,6 +1,9 @@
-package com.example.esurat.home;
+package com.example.esurat.main;
 
-public class HomeConstant {
+public class MainConstant {
+    public MainConstant() {
+    }
+
     public static final String ID = "id";
     public static final String RANK = "rank";
     public static final String PERIHAL = "perihal";
@@ -13,4 +16,8 @@ public class HomeConstant {
     public static final String TANGGAL_SURAT = "tanggalSurat";
     public static final String KETERANGAN = "keterangan";
     public static final String LINK_LIHAT_SURAT = "linkLihatSurat";
+
+    public static final String NEW = "NEW";
+    public static final String PROCESS = "PROCESS";
+    public static final String DONE = "DONE";
 }

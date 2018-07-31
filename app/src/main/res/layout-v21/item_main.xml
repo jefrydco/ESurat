@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="home"
-            type="com.example.esurat.home.HomeModel"/>
+            name="surat"
+            type="com.example.esurat.model.Surat"/>
 
     </data>
 
@@ -21,12 +21,12 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/item_home_textView_judul"
+                android:id="@+id/item_main_textView_judul"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@{home.perihal}"
+                android:text="@{surat.perihal}"
                 android:textAlignment="viewStart"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:textColor="@color/black"
@@ -38,50 +38,50 @@
                 tools:text="Pengisian data peduli HAM Kota Madiun tahun 2018" />
 
             <TextView
-                android:id="@+id/item_home_textView_tanggalTerima"
+                android:id="@+id/item_main_textView_tanggalTerima"
                 android:layout_width="0dp"
                 android:layout_height="21dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:text="@{home.tanggalTerima}"
+                android:text="@{surat.tanggalTerima}"
                 android:textAlignment="textEnd"
                 android:textColor="#757575"
                 android:textStyle="italic"
-                app:layout_constraintBaseline_toBaselineOf="@+id/item_home_textView_judul"
+                app:layout_constraintBaseline_toBaselineOf="@+id/item_main_textView_judul"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/item_home_textView_judul"
+                app:layout_constraintStart_toEndOf="@+id/item_main_textView_judul"
                 tools:text="TD 02/03/99" />
 
             <TextView
-                android:id="@+id/item_home_textView_dari"
+                android:id="@+id/item_main_textView_dari"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:textColor="#757575"
-                android:text="@{home.dari}"
+                android:text="@{surat.dari}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/item_home_textView_judul"
+                app:layout_constraintEnd_toEndOf="@+id/item_main_textView_judul"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/item_home_textView_judul"
-                app:layout_constraintTop_toBottomOf="@+id/item_home_textView_judul"
+                app:layout_constraintStart_toStartOf="@+id/item_main_textView_judul"
+                app:layout_constraintTop_toBottomOf="@+id/item_main_textView_judul"
                 app:layout_constraintVertical_bias="0.0"
                 tools:text="Sekretariat Daerah" />
 
             <TextView
-                android:id="@+id/item_home_textView_status"
+                android:id="@+id/item_main_textView_status"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:text="@{home.status}"
+                android:text="@{surat.status}"
                 android:textAlignment="textEnd"
                 android:textColor="#C62828"
-                app:layout_constraintBaseline_toBaselineOf="@+id/item_home_textView_dari"
+                app:layout_constraintBaseline_toBaselineOf="@+id/item_main_textView_dari"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/item_home_textView_dari"
+                app:layout_constraintStart_toEndOf="@+id/item_main_textView_dari"
                 tools:text="PROSES" />
 
             <View
@@ -92,7 +92,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_home_textView_dari"
+                app:layout_constraintTop_toBottomOf="@+id/item_main_textView_dari"
                 app:layout_constraintVertical_bias="1.0" />
 
         </android.support.constraint.ConstraintLayout>

@@ -14,12 +14,12 @@
 
     <string name="perihal">Perihal</string>
     <string name="dari">Dari</string>
-    <string name="tanggal_terima">TanggalTerima</string>
+    <string name="tanggal_terima">Tanggal Terima</string>
     <string name="status">Status</string>
     <string name="no_agenda">No Agenda</string>
     <string name="no_surat">No Surat</string>
     <string name="sifat">Sifat</string>
-    <string name="tanggal_surat">TanggalSurat</string>
+    <string name="tanggal_surat">Tanggal Surat</string>
     <string name="keterangan">Keterangan</string>
 
 

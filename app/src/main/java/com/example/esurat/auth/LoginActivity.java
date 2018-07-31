@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.esurat.R;
-import com.example.esurat.utils.NetworkUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
-//        loginService = (LoginService) NetworkUtils.fetch(LoginService.class);
+//        loginService = (LoginService) ServiceGeneratorUtils.fetch(LoginService.class);
 //        call = loginService.login(username, password);
 //        call.enqueue(callback);
 

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="surat"
+            type="com.example.esurat.model.Surat"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <ScrollView
+            android:id="@+id/activity_main_detail_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_detail_button_lihatSurat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--TextView No Judul-->
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_judul"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_noSurat"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_noSurat"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_main_detail_linearLayout_noSurat"
+                    tools:layout_editor_absoluteX="8dp">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_judul"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/perihal"
+                        tools:text="Perihal" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_judul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@{surat.perihal}"
+                        android:textAlignment="viewStart"
+                        tools:text="Dummy judul" />
+                </LinearLayout>
+
+                <!--TextView No Agenda-->
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_noAgenda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_judul"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_judul"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_noAgenda"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/no_agenda"
+                        android:textStyle="italic"
+                        tools:text="Nomor Agenda" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_noAgenda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@{surat.noAgenda}"
+                        tools:text="Dummy No Agenda" />
+
+                </LinearLayout>
+
+                <!--TextView No Surat-->
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_noSurat"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_noAgenda"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_noAgenda"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_main_detail_linearLayout_noAgenda">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_noSurat"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/no_surat"
+                        android:textStyle="italic"
+                        tools:text="No Surat" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_noSurat"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{surat.noSurat}"
+                        tools:text="Dummy No Surat" />
+
+                </LinearLayout>
+
+                <!--TextView Sifat-->
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_sifat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_status"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_status"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_main_detail_linearLayout_status">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_sifat"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sifat"
+                        tools:text="Sifat" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_sifat"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{surat.sifat}"
+                        tools:text="Dummy Sifat" />
+                </LinearLayout>
+
+                <!--TextView Tanggal Surat-->
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_tanggalSurat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_dari"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_dari"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_main_detail_linearLayout_dari">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_tanggalSurat"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tanggal_surat"
+                        tools:text="Tanggal Surat" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_tanggalSurat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@{surat.tanggalSurat}"
+                        tools:text="Dummy Tanggal Surat" />
+                </LinearLayout>
+
+                <!--TextView Tanggal Terima-->
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_tanggalTerima"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_tanggalSurat"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_tanggalSurat"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_main_detail_linearLayout_tanggalSurat">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_tanggalTerima"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tanggal_terima"
+                        tools:text="Tanggal Terima" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_tanggalTerima"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{surat.tanggalTerima}"
+                        tools:text="Dummy Tanggal Terima" />
+                </LinearLayout>
+
+                <!--TextView Dari-->
+
+                <!--TextView Status-->
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_dari"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="64dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_judul"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_judul"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_main_detail_linearLayout_judul">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_dari"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dari"
+                        tools:text="Dari" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_dari"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@{surat.dari}"
+                        tools:text="Dummy Dari" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_tanggalTerima"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_tanggalTerima"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_main_detail_linearLayout_tanggalTerima">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_status"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status"
+                        tools:text="Status" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_status"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{surat.status}"
+                        tools:text="Dummy Status" />
+                </LinearLayout>
+
+                <!--TextView Keterangan-->
+                <LinearLayout
+                    android:id="@+id/activity_main_detail_linearLayout_keterangan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="64dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_detail_linearLayout_sifat"
+                    app:layout_constraintStart_toStartOf="@+id/activity_main_detail_linearLayout_sifat"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_main_detail_linearLayout_sifat">
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_keterangan"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/keterangan"
+                        tools:text="Keterangan" />
+
+                    <TextView
+                        android:id="@+id/activity_main_detail_textView_value_keterangan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@{surat.keterangan}"
+                        tools:text="Dummy Keterangan" />
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/activity_main_detail_button_lihatSurat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:background="@color/info"
+            android:drawableTop="@drawable/ic_chrome_reader_mode_white_24dp"
+            android:padding="16dp"
+            android:text="@string/button_lihatSurat"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/activity_main_detail_button_uploadFile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/activity_main_detail_button_uploadFile" />
+
+        <Button
+            android:id="@+id/activity_main_detail_button_uploadFile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:background="@color/info"
+            android:drawableTop="@drawable/ic_file_upload_white_24dp"
+            android:padding="16dp"
+            android:text="@string/button_uploadFile"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/activity_main_detail_button_lihatSurat"
+            app:layout_constraintEnd_toStartOf="@+id/activity_main_detail_button_statusSelesai"
+            app:layout_constraintStart_toEndOf="@+id/activity_main_detail_button_lihatSurat" />
+
+        <Button
+            android:id="@+id/activity_main_detail_button_statusSelesai"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/info"
+            android:drawableTop="@drawable/ic_check_white_24dp"
+            android:padding="16dp"
+            android:text="@string/button_statusSelesai"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/activity_main_detail_button_uploadFile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/activity_main_detail_button_uploadFile" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

@@ -2,30 +2,28 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--
     <data>
         <variable
             name="mail"
-            type="in.tandur.tandurin.encyclopedia.EncyclopediaModel" />
+            type="com.example.esurat.model.Surat" />
     </data>
--->
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeActivity">
+    tools:context=".main.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/activity_home_recyclerView"
+            android:id="@+id/activity_main_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <ProgressBar
-            android:id="@+id/activity_home_progressBar"
+            android:id="@+id/activity_main_progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

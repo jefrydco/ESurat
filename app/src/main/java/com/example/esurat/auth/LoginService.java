@@ -1,5 +1,6 @@
 package com.example.esurat.auth;
 
+import com.example.esurat.model.Login;
 import com.example.esurat.model.Status;
 
 import retrofit2.Call;
@@ -11,5 +12,5 @@ public interface LoginService {
 
     @FormUrlEncoded
     @POST("auth")
-    Call<Status> login(@Field("username") String username, @Field("password") String password);
+    Call<Login> login(@Field("action") String action, @Field("username") String username, @Field("password") String password);
 }

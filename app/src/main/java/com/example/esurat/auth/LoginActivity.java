@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.esurat.R;
+import com.example.esurat.model.Login;
 import com.example.esurat.model.Status;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 
@@ -35,11 +36,11 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login)
     Button _loginButton;
     LoginService loginService;
-    Call<Status> call;
-    Callback<Status> callback = new Callback<Status>() {
+    Call<Login> call;
+    Callback<Login> callback = new Callback<Login>() {
         @Override
-        public void onResponse(@NonNull Call<Status> call, @NonNull Response<Status> response) {
-            if (Objects.requireNonNull(response.body()).getStatus().equals("OK")) {
+        public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
+            if (!Objects.requireNonNull(response.body()).getError()) {
                 onLoginSuccess();
                 mProgressDialog.dismiss();
             } else {
@@ -49,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(@NonNull Call<Status> call, @NonNull Throwable t) {
+        public void onFailure(@NonNull Call<Login> call, @NonNull Throwable t) {
 
         }
     };
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Implement your own authentication logic here.
         loginService = (LoginService) ServiceGeneratorUtils.createService(LoginService.class);
-        call = loginService.login(username, password);
+        call = loginService.login("login", username, password);
         call.enqueue(callback);
 
 //        new android.os.Handler().postDelayed(

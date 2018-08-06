@@ -11,6 +11,6 @@ import retrofit2.http.POST;
 public interface LoginService {
 
     @FormUrlEncoded
-    @POST("auth")
-    Call<Login> login(@Field("action") String action, @Field("username") String username, @Field("password") String password);
+    @POST("index.php?action=login")
+    Call<Login> login(@Field("username") String username, @Field("password") String password);
 }

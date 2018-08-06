@@ -36,24 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login)
     Button _loginButton;
     LoginService loginService;
-    Call<Login> call;
-    Callback<Login> callback = new Callback<Login>() {
-        @Override
-        public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
-            if (!Objects.requireNonNull(response.body()).getError()) {
-                onLoginSuccess();
-                mProgressDialog.dismiss();
-            } else {
-                onLoginFailed();
-                mProgressDialog.dismiss();
-            }
-        }
-
-        @Override
-        public void onFailure(@NonNull Call<Login> call, @NonNull Throwable t) {
-
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        _usernameText.setText("a@a.co");
-        _passwordText.setText("admin123");
+        _usernameText.setText("agus");
+        _passwordText.setText("agus");
         _loginButton.performClick();
 
         _loginButton.setOnClickListener(v -> login());
@@ -87,10 +69,25 @@ public class LoginActivity extends AppCompatActivity {
         String username = _usernameText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
-        loginService = (LoginService) ServiceGeneratorUtils.createService(LoginService.class);
-        call = loginService.login("login", username, password);
-        call.enqueue(callback);
+        loginService = ServiceGeneratorUtils.createService(LoginService.class);
+        Call<Login> call = loginService.login(username, password);
+        call.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
+                if (!Objects.requireNonNull(response.body()).getError()) {
+                    onLoginSuccess();
+                    mProgressDialog.dismiss();
+                } else {
+                    onLoginFailed();
+                    mProgressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Login> call, @NonNull Throwable t) {
+
+            }
+        });
 
 //        new android.os.Handler().postDelayed(
 //                () -> {

@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         mActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setRecyclerViewAdapter();
-        getSuratList();
+//        getSuratList();
     }
 
     private void setRecyclerViewAdapter() {

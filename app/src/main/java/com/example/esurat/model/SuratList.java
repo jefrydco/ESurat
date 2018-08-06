@@ -1,5 +1,6 @@
 package com.example.esurat.model;
 
+import android.graphics.pdf.PdfDocument;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -13,15 +14,23 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.io.Serializable;
 import java.util.List;
 
-public class SuratList implements Serializable, Parcelable {
+public class SuratList implements Serializable, Parcelable
+{
 
-    @SerializedName("status")
-    @Expose
-    private String status;
     @SerializedName("data")
     @Expose
     private List<Surat> data = null;
+    @SerializedName("page")
+    @Expose
+    private PdfDocument.Page page;
+    @SerializedName("error")
+    @Expose
+    private Boolean error;
+    @SerializedName("message")
+    @Expose
+    private String message;
     public final static Parcelable.Creator<SuratList> CREATOR = new Creator<SuratList>() {
+
 
         @SuppressWarnings({
                 "unchecked"
@@ -34,13 +43,15 @@ public class SuratList implements Serializable, Parcelable {
             return (new SuratList[size]);
         }
 
-    };
-
-    private final static long serialVersionUID = 2776766752783775788L;
+    }
+            ;
+    private final static long serialVersionUID = 8500328989317952717L;
 
     protected SuratList(Parcel in) {
-        this.status = ((String) in.readValue((String.class.getClassLoader())));
         in.readList(this.data, (com.example.esurat.model.Surat.class.getClassLoader()));
+        this.page = ((Page) in.readValue((Page.class.getClassLoader())));
+        this.error = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
+        this.message = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
@@ -52,26 +63,17 @@ public class SuratList implements Serializable, Parcelable {
 
     /**
      *
-     * @param status
+     * @param message
+     * @param error
+     * @param page
      * @param data
      */
-    public SuratList(String status, List<Surat> data) {
+    public SuratList(List<Surat> data, Page page, Boolean error, String message) {
         super();
-        this.status = status;
         this.data = data;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public SuratList withStatus(String status) {
-        this.status = status;
-        return this;
+        this.page = page;
+        this.error = error;
+        this.message = message;
     }
 
     public List<Surat> getData() {
@@ -87,14 +89,53 @@ public class SuratList implements Serializable, Parcelable {
         return this;
     }
 
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
+
+    public SuratList withPage(Page page) {
+        this.page = page;
+        return this;
+    }
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
+
+    public SuratList withError(Boolean error) {
+        this.error = error;
+        return this;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public SuratList withMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("status", status).append("data", data).toString();
+        return new ToStringBuilder(this).append("data", data).append("page", page).append("error", error).append("message", message).toString();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(status).append(data).toHashCode();
+        return new HashCodeBuilder().append(message).append(error).append(page).append(data).toHashCode();
     }
 
     @Override
@@ -102,16 +143,18 @@ public class SuratList implements Serializable, Parcelable {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof SuratList)) {
+        if ((other instanceof SuratList) == false) {
             return false;
         }
         SuratList rhs = ((SuratList) other);
-        return new EqualsBuilder().append(status, rhs.status).append(data, rhs.data).isEquals();
+        return new EqualsBuilder().append(message, rhs.message).append(error, rhs.error).append(page, rhs.page).append(data, rhs.data).isEquals();
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(status);
         dest.writeList(data);
+        dest.writeValue(page);
+        dest.writeValue(error);
+        dest.writeValue(message);
     }
 
     public int describeContents() {
@@ -119,3 +162,4 @@ public class SuratList implements Serializable, Parcelable {
     }
 
 }
+

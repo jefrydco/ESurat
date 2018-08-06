@@ -1,59 +1,56 @@
 package com.example.esurat.model;
 
+import java.io.Serializable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-
-import com.example.esurat.utils.DateUtils;
-import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
+import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.io.Serializable;
-
-public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewModel {
+public class Surat implements Serializable, Parcelable
+{
 
     @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("rank")
+    @SerializedName("no")
     @Expose
-    private Integer rank;
-    @SerializedName("perihal")
+    private Long no;
+    @SerializedName("agenda")
     @Expose
-    private String perihal;
-    @SerializedName("dari")
-    @Expose
-    private String dari;
-    @SerializedName("tanggalTerima")
-    @Expose
-    private String tanggalTerima;
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("noAgenda")
-    @Expose
-    private String noAgenda;
+    private String agenda;
     @SerializedName("noSurat")
     @Expose
     private String noSurat;
     @SerializedName("sifat")
     @Expose
     private String sifat;
-    @SerializedName("tanggalSurat")
+    @SerializedName("tglSurat")
     @Expose
-    private String tanggalSurat;
-    @SerializedName("keterangan")
+    private String tglSurat;
+    @SerializedName("tglTerima")
     @Expose
-    private String keterangan;
-    @SerializedName("linkLihatSurat")
+    private String tglTerima;
+    @SerializedName("dari")
     @Expose
-    private String linkLihatSurat;
+    private String dari;
+    @SerializedName("perihal")
+    @Expose
+    private String perihal;
+    @SerializedName("ket")
+    @Expose
+    private String ket;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("warna")
+    @Expose
+    private String warna;
     public final static Parcelable.Creator<Surat> CREATOR = new Creator<Surat>() {
+
 
         @SuppressWarnings({
                 "unchecked"
@@ -66,23 +63,23 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
             return (new Surat[size]);
         }
 
-    };
-
-    private final static long serialVersionUID = 2711785585814504457L;
+    }
+            ;
+    private final static long serialVersionUID = 6307980663519187048L;
 
     protected Surat(Parcel in) {
         this.id = ((String) in.readValue((String.class.getClassLoader())));
-        this.rank = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.perihal = ((String) in.readValue((String.class.getClassLoader())));
-        this.dari = ((String) in.readValue((String.class.getClassLoader())));
-        this.tanggalTerima = ((String) in.readValue((String.class.getClassLoader())));
-        this.status = ((String) in.readValue((String.class.getClassLoader())));
-        this.noAgenda = ((String) in.readValue((String.class.getClassLoader())));
+        this.no = ((Long) in.readValue((Long.class.getClassLoader())));
+        this.agenda = ((String) in.readValue((String.class.getClassLoader())));
         this.noSurat = ((String) in.readValue((String.class.getClassLoader())));
         this.sifat = ((String) in.readValue((String.class.getClassLoader())));
-        this.tanggalSurat = ((String) in.readValue((String.class.getClassLoader())));
-        this.keterangan = ((String) in.readValue((String.class.getClassLoader())));
-        this.linkLihatSurat = ((String) in.readValue((String.class.getClassLoader())));
+        this.tglSurat = ((String) in.readValue((String.class.getClassLoader())));
+        this.tglTerima = ((String) in.readValue((String.class.getClassLoader())));
+        this.dari = ((String) in.readValue((String.class.getClassLoader())));
+        this.perihal = ((String) in.readValue((String.class.getClassLoader())));
+        this.ket = ((String) in.readValue((String.class.getClassLoader())));
+        this.status = ((String) in.readValue((String.class.getClassLoader())));
+        this.warna = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
@@ -94,33 +91,33 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
 
     /**
      *
+     * @param agenda
      * @param id
-     * @param tanggalSurat
-     * @param rank
-     * @param noSurat
+     * @param warna
      * @param status
-     * @param keterangan
+     * @param noSurat
+     * @param tglTerima
+     * @param no
      * @param perihal
      * @param dari
-     * @param tanggalTerima
-     * @param linkLihatSurat
+     * @param ket
+     * @param tglSurat
      * @param sifat
-     * @param noAgenda
      */
-    public Surat(String id, Integer rank, String perihal, String dari, String tanggalTerima, String status, String noAgenda, String noSurat, String sifat, String tanggalSurat, String keterangan, String linkLihatSurat) {
+    public Surat(String id, Long no, String agenda, String noSurat, String sifat, String tglSurat, String tglTerima, String dari, String perihal, String ket, String status, String warna) {
         super();
         this.id = id;
-        this.rank = rank;
-        this.perihal = perihal;
-        this.dari = dari;
-        this.tanggalTerima = tanggalTerima;
-        this.status = status;
-        this.noAgenda = noAgenda;
+        this.no = no;
+        this.agenda = agenda;
         this.noSurat = noSurat;
         this.sifat = sifat;
-        this.tanggalSurat = tanggalSurat;
-        this.keterangan = keterangan;
-        this.linkLihatSurat = linkLihatSurat;
+        this.tglSurat = tglSurat;
+        this.tglTerima = tglTerima;
+        this.dari = dari;
+        this.perihal = perihal;
+        this.ket = ket;
+        this.status = status;
+        this.warna = warna;
     }
 
     public String getId() {
@@ -136,81 +133,29 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
         return this;
     }
 
-    public Integer getRank() {
-        return rank;
+    public Long getNo() {
+        return no;
     }
 
-    public void setRank(Integer rank) {
-        this.rank = rank;
+    public void setNo(Long no) {
+        this.no = no;
     }
 
-    public Surat withRank(Integer rank) {
-        this.rank = rank;
+    public Surat withNo(Long no) {
+        this.no = no;
         return this;
     }
 
-    public String getPerihal() {
-        return perihal;
+    public String getAgenda() {
+        return agenda;
     }
 
-    public void setPerihal(String perihal) {
-        this.perihal = perihal;
+    public void setAgenda(String agenda) {
+        this.agenda = agenda;
     }
 
-    public Surat withPerihal(String perihal) {
-        this.perihal = perihal;
-        return this;
-    }
-
-    public String getDari() {
-        return dari;
-    }
-
-    public void setDari(String dari) {
-        this.dari = dari;
-    }
-
-    public Surat withDari(String dari) {
-        this.dari = dari;
-        return this;
-    }
-
-    public String getTanggalTerima() {
-        return DateUtils.formatDate(Long.valueOf(tanggalTerima));
-    }
-
-    public void setTanggalTerima(String tanggalTerima) {
-        this.tanggalTerima = tanggalTerima;
-    }
-
-    public Surat withTanggalTerima(String tanggalTerima) {
-        this.tanggalTerima = tanggalTerima;
-        return this;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Surat withStatus(String status) {
-        this.status = status;
-        return this;
-    }
-
-    public String getNoAgenda() {
-        return noAgenda;
-    }
-
-    public void setNoAgenda(String noAgenda) {
-        this.noAgenda = noAgenda;
-    }
-
-    public Surat withNoAgenda(String noAgenda) {
-        this.noAgenda = noAgenda;
+    public Surat withAgenda(String agenda) {
+        this.agenda = agenda;
         return this;
     }
 
@@ -240,53 +185,105 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
         return this;
     }
 
-    public String getTanggalSurat() {
-        return DateUtils.formatDate(Long.valueOf(tanggalSurat));
+    public String getTglSurat() {
+        return tglSurat;
     }
 
-    public void setTanggalSurat(String tanggalSurat) {
-        this.tanggalSurat = tanggalSurat;
+    public void setTglSurat(String tglSurat) {
+        this.tglSurat = tglSurat;
     }
 
-    public Surat withTanggalSurat(String tanggalSurat) {
-        this.tanggalSurat = tanggalSurat;
+    public Surat withTglSurat(String tglSurat) {
+        this.tglSurat = tglSurat;
         return this;
     }
 
-    public String getKeterangan() {
-        return keterangan;
+    public String getTglTerima() {
+        return tglTerima;
     }
 
-    public void setKeterangan(String keterangan) {
-        this.keterangan = keterangan;
+    public void setTglTerima(String tglTerima) {
+        this.tglTerima = tglTerima;
     }
 
-    public Surat withKeterangan(String keterangan) {
-        this.keterangan = keterangan;
+    public Surat withTglTerima(String tglTerima) {
+        this.tglTerima = tglTerima;
         return this;
     }
 
-    public String getLinkLihatSurat() {
-        return linkLihatSurat;
+    public String getDari() {
+        return dari;
     }
 
-    public void setLinkLihatSurat(String linkLihatSurat) {
-        this.linkLihatSurat = linkLihatSurat;
+    public void setDari(String dari) {
+        this.dari = dari;
     }
 
-    public Surat withLinkLihatSurat(String linkLihatSurat) {
-        this.linkLihatSurat = linkLihatSurat;
+    public Surat withDari(String dari) {
+        this.dari = dari;
+        return this;
+    }
+
+    public String getPerihal() {
+        return perihal;
+    }
+
+    public void setPerihal(String perihal) {
+        this.perihal = perihal;
+    }
+
+    public Surat withPerihal(String perihal) {
+        this.perihal = perihal;
+        return this;
+    }
+
+    public String getKet() {
+        return ket;
+    }
+
+    public void setKet(String ket) {
+        this.ket = ket;
+    }
+
+    public Surat withKet(String ket) {
+        this.ket = ket;
+        return this;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Surat withStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public String getWarna() {
+        return warna;
+    }
+
+    public void setWarna(String warna) {
+        this.warna = warna;
+    }
+
+    public Surat withWarna(String warna) {
+        this.warna = warna;
         return this;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("id", id).append("rank", rank).append("perihal", perihal).append("dari", dari).append("tanggalTerima", tanggalTerima).append("status", status).append("noAgenda", noAgenda).append("noSurat", noSurat).append("sifat", sifat).append("tanggalSurat", tanggalSurat).append("keterangan", keterangan).append("linkLihatSurat", linkLihatSurat).toString();
+        return new ToStringBuilder(this).append("id", id).append("no", no).append("agenda", agenda).append("noSurat", noSurat).append("sifat", sifat).append("tglSurat", tglSurat).append("tglTerima", tglTerima).append("dari", dari).append("perihal", perihal).append("ket", ket).append("status", status).append("warna", warna).toString();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(noSurat).append(status).append(perihal).append(tanggalTerima).append(noAgenda).append(id).append(tanggalSurat).append(rank).append(keterangan).append(dari).append(linkLihatSurat).append(sifat).toHashCode();
+        return new HashCodeBuilder().append(agenda).append(warna).append(status).append(noSurat).append(tglTerima).append(no).append(perihal).append(id).append(dari).append(ket).append(tglSurat).append(sifat).toHashCode();
     }
 
     @Override
@@ -294,39 +291,30 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
         if (other == this) {
             return true;
         }
-        if (!(other instanceof Surat)) {
+        if ((other instanceof Surat) == false) {
             return false;
         }
         Surat rhs = ((Surat) other);
-        return new EqualsBuilder().append(noSurat, rhs.noSurat).append(status, rhs.status).append(perihal, rhs.perihal).append(tanggalTerima, rhs.tanggalTerima).append(noAgenda, rhs.noAgenda).append(id, rhs.id).append(tanggalSurat, rhs.tanggalSurat).append(rank, rhs.rank).append(keterangan, rhs.keterangan).append(dari, rhs.dari).append(linkLihatSurat, rhs.linkLihatSurat).append(sifat, rhs.sifat).isEquals();
+        return new EqualsBuilder().append(agenda, rhs.agenda).append(warna, rhs.warna).append(status, rhs.status).append(noSurat, rhs.noSurat).append(tglTerima, rhs.tglTerima).append(no, rhs.no).append(perihal, rhs.perihal).append(id, rhs.id).append(dari, rhs.dari).append(ket, rhs.ket).append(tglSurat, rhs.tglSurat).append(sifat, rhs.sifat).isEquals();
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
-        dest.writeValue(rank);
-        dest.writeValue(perihal);
-        dest.writeValue(dari);
-        dest.writeValue(tanggalTerima);
-        dest.writeValue(status);
-        dest.writeValue(noAgenda);
+        dest.writeValue(no);
+        dest.writeValue(agenda);
         dest.writeValue(noSurat);
         dest.writeValue(sifat);
-        dest.writeValue(tanggalSurat);
-        dest.writeValue(keterangan);
-        dest.writeValue(linkLihatSurat);
+        dest.writeValue(tglSurat);
+        dest.writeValue(tglTerima);
+        dest.writeValue(dari);
+        dest.writeValue(perihal);
+        dest.writeValue(ket);
+        dest.writeValue(status);
+        dest.writeValue(warna);
     }
 
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public <T> boolean isSameModelAs(@NonNull T model) {
-        return equals(model);
-    }
-
-    @Override
-    public <T> boolean isContentTheSameAs(@NonNull T model) {
-        return equals(model);
-    }
 }

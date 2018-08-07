@@ -1,6 +1,5 @@
 package com.example.esurat.model;
 
-import android.graphics.pdf.PdfDocument;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -22,7 +21,7 @@ public class SuratList implements Serializable, Parcelable
     private List<Surat> data = null;
     @SerializedName("page")
     @Expose
-    private PdfDocument.Page page;
+    private Page page;
     @SerializedName("error")
     @Expose
     private Boolean error;
@@ -143,7 +142,7 @@ public class SuratList implements Serializable, Parcelable
         if (other == this) {
             return true;
         }
-        if ((other instanceof SuratList) == false) {
+        if (!(other instanceof SuratList)) {
             return false;
         }
         SuratList rhs = ((SuratList) other);

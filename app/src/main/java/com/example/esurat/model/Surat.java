@@ -1,14 +1,16 @@
 package com.example.esurat.model;
 
-import java.io.Serializable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.io.Serializable;
 
 public class Surat implements Serializable, Parcelable
 {

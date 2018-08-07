@@ -198,7 +198,7 @@ public class LoginData implements Serializable, Parcelable {
         if (other == this) {
             return true;
         }
-        if ((other instanceof LoginData) == false) {
+        if (!(other instanceof LoginData)) {
             return false;
         }
         LoginData rhs = ((LoginData) other);

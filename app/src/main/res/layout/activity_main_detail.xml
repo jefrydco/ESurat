@@ -85,7 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="@{surat.noAgenda}"
+                        android:text="@{surat.agenda}"
                         android:textStyle="italic"
                         tools:text="Dummy No Agenda" />
 
@@ -178,7 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="@{surat.tanggalSurat}"
+                        android:text="@{surat.tglSurat}"
                         tools:text="Dummy Tanggal Surat" />
                 </LinearLayout>
 
@@ -207,7 +207,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{surat.tanggalTerima}"
+                        android:text="@{surat.tglTerima}"
                         tools:text="Dummy Tanggal Terima" />
                 </LinearLayout>
 
@@ -297,7 +297,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="@{surat.keterangan}"
+                        android:text="@{surat.ket}"
                         tools:text="Dummy Keterangan" />
                 </LinearLayout>
 

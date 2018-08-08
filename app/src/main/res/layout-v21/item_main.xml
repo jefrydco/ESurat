@@ -43,7 +43,7 @@
                 android:layout_height="21dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:text="@{surat.tanggalTerima}"
+                android:text="@{surat.tglTerima}"
                 android:textAlignment="textEnd"
                 android:textColor="#757575"
                 android:textStyle="italic"

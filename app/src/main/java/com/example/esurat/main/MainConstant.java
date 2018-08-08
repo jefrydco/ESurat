@@ -20,4 +20,9 @@ public class MainConstant {
     public static final String NEW = "NEW";
     public static final String PROCESS = "PROCESS";
     public static final String DONE = "DONE";
+
+    public static final String BELUM = "BELUM";
+    public static final String SELESAI = "SELESAI";
+    public static final String PROSSES = "PROSSES";
+    public static final String DISPOSISI = "DISPOSISI";
 }

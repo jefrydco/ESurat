@@ -52,18 +52,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intentToLoginActivityFromMessageActivity = new Intent(this, LoginActivity.class);
-        startActivity(intentToLoginActivityFromMessageActivity);
+        Intent intentToLoginFromMessage = new Intent(this, LoginActivity.class);
+        startActivity(intentToLoginFromMessage);
 
         mActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setRecyclerViewAdapter();
-//        getSuratList();
+        getSuratList();
     }
 
     private void setRecyclerViewAdapter() {
         Comparator<Surat> comparator = new SortedListAdapter.ComparatorBuilder<Surat>()
-                .setOrderForModel(Surat.class, (a, b) -> Long.signum(a.getRank() - b.getRank()))
+                .setOrderForModel(Surat.class, (a, b) -> Long.signum(a.getNo() - b.getNo()))
                 .build();
 
         mMainAdapter = new MainAdapter(this, Surat.class, comparator);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getSuratList() {
         SuratService suratService = ServiceGeneratorUtils.createService(SuratService.class);
-        Call<SuratList> suratListCall = suratService.getListSurat();
+        Call<SuratList> suratListCall = suratService.getListSuratNextPage(4L);
         suratListCall.enqueue(new Callback<SuratList>() {
             @Override
             public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
@@ -190,17 +190,17 @@ public class MainActivity extends AppCompatActivity {
 
         for (Surat surat: mSuratList) {
             String id = surat.getId().toLowerCase();
-            String rank = String.valueOf(surat.getRank()).toLowerCase();
+            String rank = String.valueOf(surat.getNo()).toLowerCase();
             String perihal = surat.getPerihal().toLowerCase();
             String dari = surat.getDari().toLowerCase();
-            String tanggalTerima = surat.getTanggalTerima().toLowerCase();
+            String tanggalTerima = surat.getTglTerima().toLowerCase();
             String status = surat.getStatus().toLowerCase();
-            String noAgenda = surat.getNoAgenda().toLowerCase();
+            String noAgenda = surat.getAgenda().toLowerCase();
             String noSurat = surat.getNoSurat().toLowerCase();
             String sifat = surat.getStatus().toLowerCase();
-            String tanggalSurat = surat.getTanggalSurat().toLowerCase();
-            String keterangan = surat.getKeterangan().toLowerCase();
-            String linkLihatSurat = surat.getLinkLihatSurat().toLowerCase();
+            String tanggalSurat = surat.getTglSurat().toLowerCase();
+            String keterangan = surat.getKet().toLowerCase();
+//            String linkLihatSurat = surat.getL().toLowerCase();
 
             if (id.contains(lowerCasedQuery) ||
                     rank.contains(lowerCasedQuery) ||
@@ -212,8 +212,7 @@ public class MainActivity extends AppCompatActivity {
                     noSurat.contains(lowerCasedQuery) ||
                     sifat.contains(lowerCasedQuery) ||
                     tanggalSurat.contains(lowerCasedQuery) ||
-                    keterangan.contains(lowerCasedQuery) ||
-                    linkLihatSurat.contains(lowerCasedQuery)) {
+                    keterangan.contains(lowerCasedQuery)) {
                 filteredSuratList.add(surat);
             }
         }

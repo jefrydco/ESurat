@@ -13,21 +13,24 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.io.Serializable;
 import java.util.List;
 
-public class SuratList implements Serializable, Parcelable
-{
+public class SuratList implements Serializable, Parcelable {
 
     @SerializedName("data")
     @Expose
     private List<Surat> data = null;
+
     @SerializedName("page")
     @Expose
     private Page page;
+
     @SerializedName("error")
     @Expose
     private Boolean error;
+
     @SerializedName("message")
     @Expose
     private String message;
+
     public final static Parcelable.Creator<SuratList> CREATOR = new Creator<SuratList>() {
 
 

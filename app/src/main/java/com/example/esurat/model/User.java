@@ -1,8 +1,12 @@
 
 package com.example.esurat.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,48 +17,63 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-public class LoginData implements Serializable, Parcelable {
+@Entity
+public class User implements Serializable, Parcelable {
 
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     @Expose
     private String id;
+
+    @ColumnInfo(name = "id_induk")
     @SerializedName("id_induk")
     @Expose
     private String idInduk;
+
+    @ColumnInfo(name = "jabatan")
     @SerializedName("jabatan")
     @Expose
     private String jabatan;
+
+    @ColumnInfo(name = "nama")
     @SerializedName("nama")
     @Expose
     private String nama;
+
+    @ColumnInfo(name = "hp")
     @SerializedName("hp")
     @Expose
     private String hp;
+
+    @ColumnInfo(name = "user")
     @SerializedName("user")
     @Expose
     private String user;
+
+    @ColumnInfo(name = "pass")
     @SerializedName("pass")
     @Expose
     private String pass;
-    public final static Parcelable.Creator<LoginData> CREATOR = new Creator<LoginData>() {
 
+    public final static Parcelable.Creator<User> CREATOR = new Creator<User>() {
 
         @SuppressWarnings({
                 "unchecked"
         })
-        public LoginData createFromParcel(Parcel in) {
-            return new LoginData(in);
+        public User createFromParcel(Parcel in) {
+            return new User(in);
         }
 
-        public LoginData[] newArray(int size) {
-            return (new LoginData[size]);
+        public User[] newArray(int size) {
+            return (new User[size]);
         }
 
     }
             ;
     private final static long serialVersionUID = -6649302474272761799L;
 
-    protected LoginData(Parcel in) {
+    protected User(Parcel in) {
         this.id = ((String) in.readValue((String.class.getClassLoader())));
         this.idInduk = ((String) in.readValue((String.class.getClassLoader())));
         this.jabatan = ((String) in.readValue((String.class.getClassLoader())));
@@ -68,7 +87,7 @@ public class LoginData implements Serializable, Parcelable {
      * No args constructor for use in serialization
      *
      */
-    public LoginData() {
+    public User() {
     }
 
     /**
@@ -81,7 +100,7 @@ public class LoginData implements Serializable, Parcelable {
      * @param user
      * @param pass
      */
-    public LoginData(String id, String idInduk, String jabatan, String nama, String hp, String user, String pass) {
+    public User(String id, String idInduk, String jabatan, String nama, String hp, String user, String pass) {
         super();
         this.id = id;
         this.idInduk = idInduk;
@@ -100,7 +119,7 @@ public class LoginData implements Serializable, Parcelable {
         this.id = id;
     }
 
-    public LoginData withId(String id) {
+    public User withId(String id) {
         this.id = id;
         return this;
     }
@@ -113,7 +132,7 @@ public class LoginData implements Serializable, Parcelable {
         this.idInduk = idInduk;
     }
 
-    public LoginData withIdInduk(String idInduk) {
+    public User withIdInduk(String idInduk) {
         this.idInduk = idInduk;
         return this;
     }
@@ -126,7 +145,7 @@ public class LoginData implements Serializable, Parcelable {
         this.jabatan = jabatan;
     }
 
-    public LoginData withJabatan(String jabatan) {
+    public User withJabatan(String jabatan) {
         this.jabatan = jabatan;
         return this;
     }
@@ -139,7 +158,7 @@ public class LoginData implements Serializable, Parcelable {
         this.nama = nama;
     }
 
-    public LoginData withNama(String nama) {
+    public User withNama(String nama) {
         this.nama = nama;
         return this;
     }
@@ -152,7 +171,7 @@ public class LoginData implements Serializable, Parcelable {
         this.hp = hp;
     }
 
-    public LoginData withHp(String hp) {
+    public User withHp(String hp) {
         this.hp = hp;
         return this;
     }
@@ -165,7 +184,7 @@ public class LoginData implements Serializable, Parcelable {
         this.user = user;
     }
 
-    public LoginData withUser(String user) {
+    public User withUser(String user) {
         this.user = user;
         return this;
     }
@@ -178,7 +197,7 @@ public class LoginData implements Serializable, Parcelable {
         this.pass = pass;
     }
 
-    public LoginData withPass(String pass) {
+    public User withPass(String pass) {
         this.pass = pass;
         return this;
     }
@@ -198,10 +217,10 @@ public class LoginData implements Serializable, Parcelable {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof LoginData)) {
+        if (!(other instanceof User)) {
             return false;
         }
-        LoginData rhs = ((LoginData) other);
+        User rhs = ((User) other);
         return new EqualsBuilder().append(jabatan, rhs.jabatan).append(id, rhs.id).append(hp, rhs.hp).append(idInduk, rhs.idInduk).append(nama, rhs.nama).append(user, rhs.user).append(pass, rhs.pass).isEquals();
     }
 

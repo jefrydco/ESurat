@@ -2,7 +2,9 @@ package com.example.esurat.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
+import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,45 +14,56 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-public class Surat implements Serializable, Parcelable
-{
+public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewModel{
 
     @SerializedName("id")
     @Expose
     private String id;
+
     @SerializedName("no")
     @Expose
     private Long no;
+
     @SerializedName("agenda")
     @Expose
     private String agenda;
+
     @SerializedName("noSurat")
     @Expose
     private String noSurat;
+
     @SerializedName("sifat")
     @Expose
     private String sifat;
+
     @SerializedName("tglSurat")
     @Expose
     private String tglSurat;
+
     @SerializedName("tglTerima")
     @Expose
     private String tglTerima;
+
     @SerializedName("dari")
     @Expose
     private String dari;
+
     @SerializedName("perihal")
     @Expose
     private String perihal;
+
     @SerializedName("ket")
     @Expose
     private String ket;
+
     @SerializedName("status")
     @Expose
     private String status;
+
     @SerializedName("warna")
     @Expose
     private String warna;
+
     public final static Parcelable.Creator<Surat> CREATOR = new Creator<Surat>() {
 
 
@@ -293,7 +306,7 @@ public class Surat implements Serializable, Parcelable
         if (other == this) {
             return true;
         }
-        if ((other instanceof Surat) == false) {
+        if (!(other instanceof Surat)) {
             return false;
         }
         Surat rhs = ((Surat) other);
@@ -319,4 +332,13 @@ public class Surat implements Serializable, Parcelable
         return 0;
     }
 
+    @Override
+    public <T> boolean isSameModelAs(@NonNull T model) {
+        return equals(model);
+    }
+
+    @Override
+    public <T> boolean isContentTheSameAs(@NonNull T model) {
+        return equals(model);
+    }
 }

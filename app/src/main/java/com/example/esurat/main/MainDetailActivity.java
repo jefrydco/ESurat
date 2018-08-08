@@ -2,7 +2,6 @@ package com.example.esurat.main;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,7 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.MimeTypeMap;
-import android.widget.Toast;
 
 import com.example.esurat.R;
 import com.example.esurat.customtabs.CustomTabActivityHelper;
@@ -62,20 +60,25 @@ public class MainDetailActivity extends AppCompatActivity {
         mActivityMainDetailBinding.setSurat(mSurat);
         service = ServiceGeneratorUtils.createService(SuratService.class);
 
-        if (mSurat.getStatus().equals(MainConstant.NEW)) {
+        if (mSurat.getStatus().equals(MainConstant.BELUM)) {
             mActivityMainDetailBinding
                     .activityMainDetailTextViewValueStatus
                     .setTextColor(ContextCompat.getColor(this, R.color.error));
         }
-        if (mSurat.getStatus().equals(MainConstant.PROCESS)) {
+        if (mSurat.getStatus().equals(MainConstant.PROSSES)) {
             mActivityMainDetailBinding
                     .activityMainDetailTextViewValueStatus
                     .setTextColor(ContextCompat.getColor(this, R.color.warning));
         }
-        if (mSurat.getStatus().equals(MainConstant.DONE)) {
+        if (mSurat.getStatus().equals(MainConstant.DISPOSISI)) {
             mActivityMainDetailBinding
                     .activityMainDetailTextViewValueStatus
                     .setTextColor(ContextCompat.getColor(this, R.color.info));
+        }
+        if (mSurat.getStatus().equals(MainConstant.SELESAI)) {
+            mActivityMainDetailBinding
+                    .activityMainDetailTextViewValueStatus
+                    .setTextColor(ContextCompat.getColor(this, R.color.success));
         }
 
         mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setEnabled(false);
@@ -93,8 +96,8 @@ public class MainDetailActivity extends AppCompatActivity {
             }
         });
 
-        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-                openCustomTabs(mSurat.getLinkLihatSurat()));
+//        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
+//                openCustomTabs(mSurat.getLinkLihatSurat()));
         mActivityMainDetailBinding.activityMainDetailButtonUploadFile.setOnClickListener(v -> {
             if (isStoragePermissionGranted()) {
                 openFilePicker();
@@ -261,16 +264,16 @@ public class MainDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<SuratList>() {
             @Override
             public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
-                Log.d(TAG, "onResponse: Set status successfully: " + Objects.requireNonNull(response.body()).getStatus());
-                if (Objects.requireNonNull(response.body()).getStatus().equals("OK")) {
-                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setEnabled(false);
-                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setAlpha(.5f);
-                    mActivityMainDetailBinding.activityMainDetailTextViewValueStatus.setText(Objects.requireNonNull(response.body()).getData().get(0).getStatus());
-                    mActivityMainDetailBinding.activityMainDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(context, R.color.info));
-                    Toast.makeText(MainDetailActivity.this, "Sukses", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainDetailActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
-                }
+//                Log.d(TAG, "onResponse: Set status successfully: " + Objects.requireNonNull(response.body()).getStatus());
+//                if (Objects.requireNonNull(response.body()).getStatus().equals("OK")) {
+//                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setEnabled(false);
+//                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setAlpha(.5f);
+//                    mActivityMainDetailBinding.activityMainDetailTextViewValueStatus.setText(Objects.requireNonNull(response.body()).getData().get(0).getStatus());
+//                    mActivityMainDetailBinding.activityMainDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(context, R.color.info));
+//                    Toast.makeText(MainDetailActivity.this, "Sukses", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(MainDetailActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
+//                }
             }
 
             @Override

@@ -24,14 +24,17 @@ public class MainViewHolder extends SortedListAdapter.ViewHolder<Surat> {
 
     @Override
     protected void performBind(@NonNull Surat item) {
-        if (item.getStatus().equals(MainConstant.NEW)) {
+        if (item.getStatus().equals(MainConstant.BELUM)) {
             mItemMainBinding.itemMainTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.error));
         }
-        if (item.getStatus().equals(MainConstant.PROCESS)) {
+        if (item.getStatus().equals(MainConstant.PROSSES)) {
             mItemMainBinding.itemMainTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.warning));
         }
-        if (item.getStatus().equals(MainConstant.DONE)) {
+        if (item.getStatus().equals(MainConstant.DISPOSISI)) {
             mItemMainBinding.itemMainTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.info));
+        }
+        if (item.getStatus().equals(MainConstant.SELESAI)) {
+            mItemMainBinding.itemMainTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.success));
         }
         mItemMainBinding.setSurat(item);
     }

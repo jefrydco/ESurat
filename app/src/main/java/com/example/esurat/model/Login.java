@@ -12,15 +12,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-public class Login implements Serializable, Parcelable
-{
+public class Login implements Serializable, Parcelable {
 
     @SerializedName("data")
     @Expose
-    private LoginData data;
+    private User data;
+
     @SerializedName("error")
     @Expose
     private Boolean error;
+
     @SerializedName("message")
     @Expose
     private String message;
@@ -43,7 +44,7 @@ public class Login implements Serializable, Parcelable
     private final static long serialVersionUID = 1935257757116860375L;
 
     protected Login(Parcel in) {
-        this.data = ((LoginData) in.readValue((LoginData.class.getClassLoader())));
+        this.data = ((User) in.readValue((User.class.getClassLoader())));
         this.error = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
     }
@@ -61,22 +62,22 @@ public class Login implements Serializable, Parcelable
      * @param error
      * @param data
      */
-    public Login(LoginData data, Boolean error, String message) {
+    public Login(User data, Boolean error, String message) {
         super();
         this.data = data;
         this.error = error;
         this.message = message;
     }
 
-    public LoginData getLoginData() {
+    public User getLoginData() {
         return data;
     }
 
-    public void setLoginData(LoginData data) {
+    public void setLoginData(User data) {
         this.data = data;
     }
 
-    public Login withLoginData(LoginData data) {
+    public Login withLoginData(User data) {
         this.data = data;
         return this;
     }
@@ -122,7 +123,7 @@ public class Login implements Serializable, Parcelable
         if (other == this) {
             return true;
         }
-        if ((other instanceof Login) == false) {
+        if (!(other instanceof Login)) {
             return false;
         }
         Login rhs = ((Login) other);

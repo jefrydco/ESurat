@@ -12,15 +12,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-public class Page implements Serializable, Parcelable
-{
+public class Page implements Serializable, Parcelable {
 
     @SerializedName("currentPage")
     @Expose
     private Long currentPage;
+
     @SerializedName("totalPage")
     @Expose
     private Long totalPage;
+
     public final static Parcelable.Creator<Page> CREATOR = new Creator<Page>() {
 
 

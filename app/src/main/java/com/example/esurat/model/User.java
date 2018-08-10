@@ -1,12 +1,8 @@
 
 package com.example.esurat.model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,41 +13,32 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-@Entity
 public class User implements Serializable, Parcelable {
 
-    @PrimaryKey
-    @ColumnInfo(name = "id")
     @SerializedName("id")
     @Expose
     private String id;
 
-    @ColumnInfo(name = "id_induk")
     @SerializedName("id_induk")
     @Expose
     private String idInduk;
 
-    @ColumnInfo(name = "jabatan")
     @SerializedName("jabatan")
     @Expose
     private String jabatan;
 
-    @ColumnInfo(name = "nama")
     @SerializedName("nama")
     @Expose
     private String nama;
 
-    @ColumnInfo(name = "hp")
     @SerializedName("hp")
     @Expose
     private String hp;
 
-    @ColumnInfo(name = "user")
     @SerializedName("user")
     @Expose
     private String user;
 
-    @ColumnInfo(name = "pass")
     @SerializedName("pass")
     @Expose
     private String pass;

@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -51,9 +52,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intentToLoginFromMessage = new Intent(this, LoginActivity.class);
-        startActivity(intentToLoginFromMessage);
 
         mActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
@@ -134,6 +132,18 @@ public class MainActivity extends AppCompatActivity {
                     Intent intentToActivityMainDetail = new Intent(this, MainDetailActivity.class);
                     intentToActivityMainDetail.putExtra("surat", (Serializable) currentSurat);
                     startActivity(intentToActivityMainDetail);
+        });
+
+        mActivityHomeBinding.activityMainRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
         });
 
         mActivityHomeBinding.activityMainRecyclerView

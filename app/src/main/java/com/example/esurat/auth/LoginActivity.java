@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.esurat.R;
+import com.example.esurat.main.MainActivity;
 import com.example.esurat.model.Login;
 import com.example.esurat.model.Status;
 import com.example.esurat.utils.ServiceGeneratorUtils;
@@ -119,6 +120,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
+        Intent intentToMainActivityFromLoginActivity = new Intent(this, MainActivity.class);
+        startActivity(intentToMainActivityFromLoginActivity);
         finish();
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }

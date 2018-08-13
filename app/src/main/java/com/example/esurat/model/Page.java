@@ -17,11 +17,9 @@ public class Page implements Serializable, Parcelable {
     @SerializedName("currentPage")
     @Expose
     private Long currentPage;
-
     @SerializedName("totalPage")
     @Expose
     private Long totalPage;
-
     public final static Parcelable.Creator<Page> CREATOR = new Creator<Page>() {
 
 
@@ -104,7 +102,7 @@ public class Page implements Serializable, Parcelable {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Page) == false) {
+        if (!(other instanceof Page)) {
             return false;
         }
         Page rhs = ((Page) other);

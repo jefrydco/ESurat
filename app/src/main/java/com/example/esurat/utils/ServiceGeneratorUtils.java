@@ -1,12 +1,14 @@
 package com.example.esurat.utils;
 
+import com.example.esurat.main.MainConstant;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGeneratorUtils {
-    private static final String API_URL = "http://10.0.2.2:8080/esurat/api/";
+    private static final String API_URL = MainConstant.BASE_URL + "api/";
     public ServiceGeneratorUtils() {
     }
 

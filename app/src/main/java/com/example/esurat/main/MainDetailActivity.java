@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.MimeTypeMap;
+import android.webkit.WebView;
 
 import com.example.esurat.R;
 import com.example.esurat.customtabs.CustomTabActivityHelper;
@@ -96,8 +97,14 @@ public class MainDetailActivity extends AppCompatActivity {
             }
         });
 
+        // TODO: Uncomment this code bellow to make pdf viewer viewe the correct pdf.
 //        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-//                openCustomTabs(mSurat.getLinkLihatSurat()));
+//                openCustomTabs(MainConstant.BASE_URL + mSurat.getPathPdf()));
+
+        // TODO: Comment this code bellow to make pdf viewer viewe the correct pdf.
+        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
+                openPdfViewer(MainConstant.BASE_URL + "images/gambar.pdf"));
+
         mActivityMainDetailBinding.activityMainDetailButtonUploadFile.setOnClickListener(v -> {
             if (isStoragePermissionGranted()) {
                 openFilePicker();
@@ -177,7 +184,8 @@ public class MainDetailActivity extends AppCompatActivity {
     }
 
     private void openCustomTabs(String url) {
-        Uri googlePDFViewerUri = Uri.parse(GOOGLE_VIEWER_URL + url);
+//        Uri googlePDFViewerUri = Uri.parse(GOOGLE_VIEWER_URL + url);
+        Uri googlePDFViewerUri = Uri.parse(url);
 
         CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder(mCustomTabActivityHelper.getSession());
 
@@ -194,7 +202,14 @@ public class MainDetailActivity extends AppCompatActivity {
         CustomTabsIntent customTabsIntent = intentBuilder.build();
 
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent, googlePDFViewerUri, (activity, uri) -> {
+
         });
+    }
+
+    private void openPdfViewer(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 
     private void openFilePicker() {

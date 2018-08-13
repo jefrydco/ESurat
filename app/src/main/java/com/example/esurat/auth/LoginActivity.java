@@ -44,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        _usernameText.setText("litbang");
+        _passwordText.setText("litbang");
         _loginButton.performClick();
 
         _loginButton.setOnClickListener(v -> login());
@@ -103,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == REQUEST_LOGIN) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signin logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
             }

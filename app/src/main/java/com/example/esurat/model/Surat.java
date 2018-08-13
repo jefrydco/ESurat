@@ -19,51 +19,42 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
     @SerializedName("id")
     @Expose
     private String id;
-
     @SerializedName("no")
     @Expose
     private Long no;
-
     @SerializedName("agenda")
     @Expose
     private String agenda;
-
     @SerializedName("noSurat")
     @Expose
     private String noSurat;
-
     @SerializedName("sifat")
     @Expose
     private String sifat;
-
     @SerializedName("tglSurat")
     @Expose
     private String tglSurat;
-
     @SerializedName("tglTerima")
     @Expose
     private String tglTerima;
-
     @SerializedName("dari")
     @Expose
     private String dari;
-
     @SerializedName("perihal")
     @Expose
     private String perihal;
-
     @SerializedName("ket")
     @Expose
     private String ket;
-
+    @SerializedName("pathPdf")
+    @Expose
+    private String pathPdf;
     @SerializedName("status")
     @Expose
     private String status;
-
     @SerializedName("warna")
     @Expose
     private String warna;
-
     public final static Parcelable.Creator<Surat> CREATOR = new Creator<Surat>() {
 
 
@@ -80,7 +71,7 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
 
     }
             ;
-    private final static long serialVersionUID = 6307980663519187048L;
+    private final static long serialVersionUID = 5590173206512681776L;
 
     protected Surat(Parcel in) {
         this.id = ((String) in.readValue((String.class.getClassLoader())));
@@ -93,6 +84,7 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
         this.dari = ((String) in.readValue((String.class.getClassLoader())));
         this.perihal = ((String) in.readValue((String.class.getClassLoader())));
         this.ket = ((String) in.readValue((String.class.getClassLoader())));
+        this.pathPdf = ((String) in.readValue((String.class.getClassLoader())));
         this.status = ((String) in.readValue((String.class.getClassLoader())));
         this.warna = ((String) in.readValue((String.class.getClassLoader())));
     }
@@ -107,19 +99,20 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
     /**
      *
      * @param agenda
-     * @param id
      * @param warna
-     * @param status
      * @param noSurat
-     * @param tglTerima
+     * @param status
      * @param no
+     * @param tglTerima
      * @param perihal
+     * @param id
+     * @param pathPdf
      * @param dari
      * @param ket
      * @param tglSurat
      * @param sifat
      */
-    public Surat(String id, Long no, String agenda, String noSurat, String sifat, String tglSurat, String tglTerima, String dari, String perihal, String ket, String status, String warna) {
+    public Surat(String id, Long no, String agenda, String noSurat, String sifat, String tglSurat, String tglTerima, String dari, String perihal, String ket, String pathPdf, String status, String warna) {
         super();
         this.id = id;
         this.no = no;
@@ -131,6 +124,7 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
         this.dari = dari;
         this.perihal = perihal;
         this.ket = ket;
+        this.pathPdf = pathPdf;
         this.status = status;
         this.warna = warna;
     }
@@ -265,6 +259,19 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
         return this;
     }
 
+    public String getPathPdf() {
+        return pathPdf;
+    }
+
+    public void setPathPdf(String pathPdf) {
+        this.pathPdf = pathPdf;
+    }
+
+    public Surat withPathPdf(String pathPdf) {
+        this.pathPdf = pathPdf;
+        return this;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -293,12 +300,12 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("id", id).append("no", no).append("agenda", agenda).append("noSurat", noSurat).append("sifat", sifat).append("tglSurat", tglSurat).append("tglTerima", tglTerima).append("dari", dari).append("perihal", perihal).append("ket", ket).append("status", status).append("warna", warna).toString();
+        return new ToStringBuilder(this).append("id", id).append("no", no).append("agenda", agenda).append("noSurat", noSurat).append("sifat", sifat).append("tglSurat", tglSurat).append("tglTerima", tglTerima).append("dari", dari).append("perihal", perihal).append("ket", ket).append("pathPdf", pathPdf).append("status", status).append("warna", warna).toString();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(agenda).append(warna).append(status).append(noSurat).append(tglTerima).append(no).append(perihal).append(id).append(dari).append(ket).append(tglSurat).append(sifat).toHashCode();
+        return new HashCodeBuilder().append(agenda).append(warna).append(status).append(noSurat).append(tglTerima).append(no).append(perihal).append(id).append(pathPdf).append(dari).append(ket).append(tglSurat).append(sifat).toHashCode();
     }
 
     @Override
@@ -310,7 +317,7 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
             return false;
         }
         Surat rhs = ((Surat) other);
-        return new EqualsBuilder().append(agenda, rhs.agenda).append(warna, rhs.warna).append(status, rhs.status).append(noSurat, rhs.noSurat).append(tglTerima, rhs.tglTerima).append(no, rhs.no).append(perihal, rhs.perihal).append(id, rhs.id).append(dari, rhs.dari).append(ket, rhs.ket).append(tglSurat, rhs.tglSurat).append(sifat, rhs.sifat).isEquals();
+        return new EqualsBuilder().append(agenda, rhs.agenda).append(warna, rhs.warna).append(status, rhs.status).append(noSurat, rhs.noSurat).append(tglTerima, rhs.tglTerima).append(no, rhs.no).append(perihal, rhs.perihal).append(id, rhs.id).append(pathPdf, rhs.pathPdf).append(dari, rhs.dari).append(ket, rhs.ket).append(tglSurat, rhs.tglSurat).append(sifat, rhs.sifat).isEquals();
     }
 
     public void writeToParcel(Parcel dest, int flags) {
@@ -324,6 +331,7 @@ public class Surat implements Serializable, Parcelable, SortedListAdapter.ViewMo
         dest.writeValue(dari);
         dest.writeValue(perihal);
         dest.writeValue(ket);
+        dest.writeValue(pathPdf);
         dest.writeValue(status);
         dest.writeValue(warna);
     }

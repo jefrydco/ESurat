@@ -13,8 +13,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface SuratService {
-    @GET("index.php?action=getSurat")
-    Call<SuratList> getListSurat();
+    @FormUrlEncoded
+    @POST("index.php?action=getSurat")
+    Call<SuratList> getListSurat(@Field("id") String id);
 
     @FormUrlEncoded
     @POST("index.php?action=nextPage")

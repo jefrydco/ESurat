@@ -24,6 +24,7 @@ import com.example.esurat.auth.LoginActivity;
 import com.example.esurat.databinding.ActivityMainBinding;
 import com.example.esurat.model.Surat;
 import com.example.esurat.model.SuratList;
+import com.example.esurat.model.User;
 import com.example.esurat.utils.RecyclerItemClickSupportUtils;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
@@ -56,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         mActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setRecyclerViewAdapter();
-        getSuratList();
+
+        User user = (User) getIntent().getSerializableExtra(MainConstant.USER);
+
+        getSuratList(user);
     }
 
     private void setRecyclerViewAdapter() {
@@ -153,9 +157,9 @@ public class MainActivity extends AppCompatActivity {
                 .setAdapter(mMainAdapter);
     }
 
-    private void getSuratList() {
+    private void getSuratList(User user) {
         SuratService suratService = ServiceGeneratorUtils.createService(SuratService.class);
-        Call<SuratList> suratListCall = suratService.getListSuratNextPage(4L);
+        Call<SuratList> suratListCall = suratService.getListSurat(user.getId());
         suratListCall.enqueue(new Callback<SuratList>() {
             @Override
             public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {

@@ -69,15 +69,15 @@ public class Login implements Serializable, Parcelable {
         this.message = message;
     }
 
-    public User getLoginData() {
+    public User getUser() {
         return data;
     }
 
-    public void setLoginData(User data) {
+    public void setUser(User data) {
         this.data = data;
     }
 
-    public Login withLoginData(User data) {
+    public Login withUser(User data) {
         this.data = data;
         return this;
     }

@@ -103,7 +103,7 @@ public class MainDetailActivity extends AppCompatActivity {
 
         // TODO: Comment this code bellow to make pdf viewer viewe the correct pdf.
         mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-                openPdfViewer(MainConstant.BASE_URL + "images/gambar.pdf"));
+                openPdfViewer(MainConstant.BASE_URL + "images/gambar_.pdf"));
 
         mActivityMainDetailBinding.activityMainDetailButtonUploadFile.setOnClickListener(v -> {
             if (isStoragePermissionGranted()) {

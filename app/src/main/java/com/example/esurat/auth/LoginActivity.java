@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        _usernameText.setText("litbang");
-        _passwordText.setText("litbang");
+        _usernameText.setText("dirut");
+        _passwordText.setText("dirut");
         _loginButton.performClick();
 
         _loginButton.setOnClickListener(v -> login());

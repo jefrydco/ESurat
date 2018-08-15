@@ -25,7 +25,9 @@ import com.example.esurat.databinding.ActivityMainBinding;
 import com.example.esurat.model.Surat;
 import com.example.esurat.model.SuratList;
 import com.example.esurat.model.User;
+import com.example.esurat.utils.EndlessRecyclerOnScrollListenerUtils;
 import com.example.esurat.utils.RecyclerItemClickSupportUtils;
+import com.example.esurat.utils.RecyclerViewPositionUtils;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 import com.google.gson.annotations.Expose;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     List<Surat> mSuratList;
     private Animator mAnimator;
     private MainAdapter mMainAdapter;
+    User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         setRecyclerViewAdapter();
 
-        User user = (User) getIntent().getSerializableExtra(MainConstant.USER);
+        user = (User) getIntent().getSerializableExtra(MainConstant.USER);
 
-        getSuratList(user);
+        getSuratList();
     }
 
     private void setRecyclerViewAdapter() {
@@ -138,15 +141,23 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intentToActivityMainDetail);
         });
 
-        mActivityHomeBinding.activityMainRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mActivityHomeBinding.activityMainRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListenerUtils() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
+            public void onLoadMore(RecyclerView recyclerView, int currentPage) {
+                SuratService suratService = ServiceGeneratorUtils.createService(SuratService.class);
+                Call<SuratList> suratListNextCall = suratService.getListSuratNextPage(user.getId(), Integer.valueOf(currentPage).longValue());
+                suratListNextCall.enqueue(new Callback<SuratList>() {
+                    @Override
+                    public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
+                        mSuratList.addAll(Objects.requireNonNull(response.body()).getData());
+                        mMainAdapter.edit().removeAll().replaceAll(mSuratList).commit();
+                    }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+                    @Override
+                    public void onFailure(@NonNull Call<SuratList> call, @NonNull Throwable t) {
+                        Log.d(TAG, "onFailure: " + t.getMessage());
+                    }
+                });
             }
         });
 
@@ -157,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAdapter(mMainAdapter);
     }
 
-    private void getSuratList(User user) {
+    private void getSuratList() {
         SuratService suratService = ServiceGeneratorUtils.createService(SuratService.class);
         Call<SuratList> suratListCall = suratService.getListSurat(user.getId());
         suratListCall.enqueue(new Callback<SuratList>() {

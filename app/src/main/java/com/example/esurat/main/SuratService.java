@@ -19,7 +19,7 @@ public interface SuratService {
 
     @FormUrlEncoded
     @POST("index.php?action=nextPage")
-    Call<SuratList> getListSuratNextPage(@Field("page") Long page);
+    Call<SuratList> getListSuratNextPage(@Field("id") String id, @Field("page") Long page);
 
     @FormUrlEncoded
     @POST("setStatus")

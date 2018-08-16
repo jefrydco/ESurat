@@ -144,7 +144,7 @@ public class MainDetailActivity extends AppCompatActivity {
 
                     Snackbar snackbar = Snackbar.make(
                             mActivityMainDetailBinding.activityMainDetailScrollView,
-                            R.string.selesai_info,
+                            R.string.selesai_info_success,
                             Snackbar.LENGTH_LONG);
 
                     snackbar.setAction("OK", v -> snackbar.dismiss());
@@ -152,6 +152,15 @@ public class MainDetailActivity extends AppCompatActivity {
                     snackbar.show();
                     mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setEnabled(false);
                     mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_dark));
+                } else {
+                    Snackbar snackbar = Snackbar.make(
+                            mActivityMainDetailBinding.activityMainDetailScrollView,
+                            R.string.selesai_info_failed,
+                            Snackbar.LENGTH_LONG);
+
+                    snackbar.setAction("OK", v -> snackbar.dismiss());
+
+                    snackbar.show();
                 }
             }
 
@@ -391,14 +400,32 @@ public class MainDetailActivity extends AppCompatActivity {
                 requestFile);
 
         // finally, execute the request
-        Call<Status> call = service.uploadSurat(body);
-        call.enqueue(new Callback<Status>() {
+        Call<SuratList> call = service.uploadSurat(user.getId(), mSurat.getId(), body);
+        call.enqueue(new Callback<SuratList>() {
             @Override
-            public void onResponse(@NonNull Call<Status> call, @NonNull Response<Status> response) {
-                Log.d(TAG, "onResponse: Upload success: " + response.body().getStatus());
+            public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
+                if (!Objects.requireNonNull(response.body()).getError()) {
+                    Snackbar snackbar = Snackbar.make(
+                            mActivityMainDetailBinding.activityMainDetailScrollView,
+                            R.string.upload_balasan_info_success,
+                            Snackbar.LENGTH_LONG);
+
+                    snackbar.setAction("OK", v -> snackbar.dismiss());
+
+                    snackbar.show();
+                } else {
+                    Snackbar snackbar = Snackbar.make(
+                            mActivityMainDetailBinding.activityMainDetailScrollView,
+                            R.string.upload_balasan_info_failed,
+                            Snackbar.LENGTH_LONG);
+
+                    snackbar.setAction("OK", v -> snackbar.dismiss());
+
+                    snackbar.show();
+                }
             }
             @Override
-            public void onFailure(@NonNull Call<Status> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SuratList> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: Upload failed: " + t.getLocalizedMessage());
             }
         });

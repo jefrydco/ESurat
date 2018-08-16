@@ -29,7 +29,7 @@ public interface SuratService {
     @POST("?action=selesai")
     Call<SuratList> setSuratStatusToSelesai(@Field("id") String id, @Field("idSurat") String idSurat);
 
-    @Multipart
-    @POST("uploadSurat")
-    Call<Status> uploadSurat(@Part MultipartBody.Part body);
+    @FormUrlEncoded
+    @POST("index.php?action=uploadBalasan")
+    Call<SuratList> uploadSurat(@Field("id") String id, @Field("idSurat") String idSurat, @Field("file") MultipartBody.Part file);
 }

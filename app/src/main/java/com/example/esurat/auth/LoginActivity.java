@@ -2,11 +2,9 @@ package com.example.esurat.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,17 +12,16 @@ import android.widget.Toast;
 
 import com.example.esurat.R;
 import com.example.esurat.main.MainActivity;
-import com.example.esurat.main.MainConstant;
 import com.example.esurat.model.Login;
-import com.example.esurat.model.Status;
 import com.example.esurat.model.User;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,10 +34,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.input_username)
     EditText _usernameText;
-    @BindView(R.id.input_password) EditText _passwordText;
+    @BindView(R.id.input_password)
+    EditText _passwordText;
     @BindView(R.id.btn_login)
     Button _loginButton;
     LoginService loginService;
+    Realm realm;
+    User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,21 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        _usernameText.setText("litbang");
-        _passwordText.setText("litbang");
+        Realm.init(this);
+
+        realm = Realm.getDefaultInstance();
+
+        user = realm.where(User.class).findFirst();
+        if (user != null) {
+            Intent intentToMainActivityFromLoginActivity = new Intent(this, MainActivity.class);
+            startActivity(intentToMainActivityFromLoginActivity);
+
+            finish();
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        }
+
+        _usernameText.setText("dirut");
+        _passwordText.setText("dirut");
         _loginButton.performClick();
 
         _loginButton.setOnClickListener(v -> login());
@@ -125,8 +138,16 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess(User user) {
         _loginButton.setEnabled(true);
 
+        realm.beginTransaction();
+        RealmResults<User> realmUsers = realm.where(User.class).contains("id", user.getId()).findAll();
+        if (realmUsers.size() == 0) {
+            realm.copyToRealm(user);
+            realm.commitTransaction();
+        } else {
+            realm.cancelTransaction();
+        }
+
         Intent intentToMainActivityFromLoginActivity = new Intent(this, MainActivity.class);
-        intentToMainActivityFromLoginActivity.putExtra(MainConstant.USER, (Serializable) user);
         startActivity(intentToMainActivityFromLoginActivity);
 
         finish();

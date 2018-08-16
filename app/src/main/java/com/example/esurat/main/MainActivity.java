@@ -9,6 +9,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
 import com.example.esurat.R;
 import com.example.esurat.auth.LoginActivity;
@@ -25,7 +30,10 @@ import com.example.esurat.databinding.ActivityMainBinding;
 import com.example.esurat.model.Surat;
 import com.example.esurat.model.SuratList;
 import com.example.esurat.model.User;
+import com.example.esurat.profile.ProfileActivity;
+import com.example.esurat.utils.EndlessRecyclerOnScrollListenerUtils;
 import com.example.esurat.utils.RecyclerItemClickSupportUtils;
+import com.example.esurat.utils.RecyclerViewPositionUtils;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 import com.github.wrdlbrnft.sortedlistadapter.SortedListAdapter;
 import com.google.gson.annotations.Expose;
@@ -37,6 +45,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     List<Surat> mSuratList;
     private Animator mAnimator;
     private MainAdapter mMainAdapter;
+    User user;
+    Realm realm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,9 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
         setRecyclerViewAdapter();
 
-        User user = (User) getIntent().getSerializableExtra(MainConstant.USER);
+        realm = Realm.getDefaultInstance();
+        user = realm.where(User.class).findFirst();
 
-        getSuratList(user);
+        Log.d(TAG, "onCreate: " + user);
+
+        getSuratList();
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name_list);
     }
 
     private void setRecyclerViewAdapter() {
@@ -138,15 +154,23 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intentToActivityMainDetail);
         });
 
-        mActivityHomeBinding.activityMainRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mActivityHomeBinding.activityMainRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListenerUtils() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
+            public void onLoadMore(RecyclerView recyclerView, int currentPage) {
+                SuratService suratService = ServiceGeneratorUtils.createService(SuratService.class);
+                Call<SuratList> suratListNextCall = suratService.getListSuratNextPage(user.getId(), Integer.valueOf(currentPage).longValue());
+                suratListNextCall.enqueue(new Callback<SuratList>() {
+                    @Override
+                    public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
+                        mSuratList.addAll(Objects.requireNonNull(response.body()).getData());
+                        mMainAdapter.edit().removeAll().replaceAll(mSuratList).commit();
+                    }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+                    @Override
+                    public void onFailure(@NonNull Call<SuratList> call, @NonNull Throwable t) {
+                        Log.d(TAG, "onFailure: " + t.getMessage());
+                    }
+                });
             }
         });
 
@@ -157,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAdapter(mMainAdapter);
     }
 
-    private void getSuratList(User user) {
+    private void getSuratList() {
         SuratService suratService = ServiceGeneratorUtils.createService(SuratService.class);
         Call<SuratList> suratListCall = suratService.getListSurat(user.getId());
         suratListCall.enqueue(new Callback<SuratList>() {
@@ -194,7 +218,31 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        MenuItem menuItemLogout = menu.findItem(R.id.menu_main_logout);
+        menuItemLogout.setOnMenuItemClickListener(item -> {
+            onLogout();
+            return true;
+        });
+
+        MenuItem menuItemAccount = menu.findItem(R.id.menu_main_account);
+        menuItemAccount.setOnMenuItemClickListener(item -> {
+           Intent intentToProfileActivityFromMainActivity = new Intent(this, ProfileActivity.class);
+           startActivity(intentToProfileActivityFromMainActivity);
+           return true;
+        });
+
         return true;
+    }
+
+    private void onLogout() {
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+        Intent intentToLoginActivityFromMainActivity = new Intent(this, LoginActivity.class);
+        startActivity(intentToLoginActivityFromMainActivity);
+        finish();
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     private List<Surat> filterSuratList(List<Surat> mSuratList, String query) {

@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">E-Surat</string>
+    <string name="app_name_list">Daftar Surat</string>
+    <string name="app_name_detail">Detail Surat</string>
+    <string name="app_name_account">Akun</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
+
     <string name="logo">Logo</string>
     <string name="button_lihatSurat">Lihat Surat</string>
     <string name="button_uploadFile">Upload File</string>
@@ -22,6 +26,14 @@
     <string name="tanggal_surat">Tanggal Surat</string>
     <string name="keterangan">Keterangan</string>
 
+    <string name="more">Lebih Lengkap</string>
+    <string name="logout">Keluar</string>
+    <string name="account">Akun</string>
+    <string name="profile">Profile</string>
+    <string name="nama">Nama</string>
+    <string name="jabatan">Jabatan</string>
+    <string name="id_induk">ID Induk</string>
+    <string name="no_hp">NO HP</string>
 
     <!--<string name="re_enter_password">Re-enter Password</string>
             <string name="mobile_number">Mobile Number</string>

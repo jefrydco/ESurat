@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -155,7 +157,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.activity_login_linearLayout),
+                R.string.login_failed,
+                Snackbar.LENGTH_LONG);
+
+        snackbar.setAction("OK", v -> snackbar.dismiss());
+
+        snackbar.show();
 
         _loginButton.setEnabled(true);
     }

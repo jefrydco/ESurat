@@ -28,41 +28,25 @@ public class ProfileActivity extends AppCompatActivity {
     private User user;
     private Realm realm;
 
-    @BindView(R.id.activity_profile_nama)
-    EditText profileNamaEditText;
-    @BindView(R.id.activity_profile_hp)
-    EditText profileHpEditText;
-    @BindView(R.id.activity_profile_id_induk)
-    EditText profileIdIndukEditText;
-    @BindView(R.id.activity_profile_jabatan)
-    EditText profileJabatanEditText;
-    @BindView(R.id.activity_profile_keluar)
-    Button profileKeluarButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        ButterKnife.bind(this);
+        mActivityProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
 
         realm = Realm.getDefaultInstance();
         user = realm.where(User.class).findFirst();
+        mActivityProfileBinding.setUser(user);
 
-        profileNamaEditText.setText(Objects.requireNonNull(user).getNama());
-        profileHpEditText.setText(Objects.requireNonNull(user).getHp());
-        profileIdIndukEditText.setText(Objects.requireNonNull(user).getIdInduk());
-        profileJabatanEditText.setText(Objects.requireNonNull(user).getJabatan());
-
-        disableEditText(profileNamaEditText);
-        disableEditText(profileHpEditText);
-        disableEditText(profileIdIndukEditText);
-        disableEditText(profileJabatanEditText);
+        disableEditText(mActivityProfileBinding.activityProfileNama);
+        disableEditText(mActivityProfileBinding.activityProfileHp);
+        disableEditText(mActivityProfileBinding.activityProfileIdInduk);
+        disableEditText(mActivityProfileBinding.activityProfileJabatan);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name_account);
 
-        profileKeluarButton.setOnClickListener(v -> onLogout());
+        mActivityProfileBinding.activityProfileKeluar.setOnClickListener(v -> onLogout());
     }
 
     @Override

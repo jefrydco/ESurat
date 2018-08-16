@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
 
@@ -28,6 +30,7 @@ import com.example.esurat.databinding.ActivityMainDetailBinding;
 import com.example.esurat.model.Status;
 import com.example.esurat.model.Surat;
 import com.example.esurat.model.SuratList;
+import com.example.esurat.model.User;
 import com.example.esurat.profile.ProfileActivity;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 
@@ -55,6 +58,7 @@ public class MainDetailActivity extends AppCompatActivity {
     SuratService service;
     Surat mSurat;
     Realm realm;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,33 +66,111 @@ public class MainDetailActivity extends AppCompatActivity {
         mActivityMainDetailBinding = DataBindingUtil
                 .setContentView(this, R.layout.activity_main_detail);
 
-        realm = Realm.getDefaultInstance();
+        setupService();
 
-        mSurat = (Surat) getIntent().getSerializableExtra("surat");
-        mActivityMainDetailBinding.setSurat(mSurat);
+        setupRealm();
+
+        setupSurat();
+
+        changeSuratStatusToProses();
+
+        setupColor();
+
+        setupLihatSurat();
+
+        setupUploadFile();
+
+        setupButtonSelesai();
+
+        setupActionBar();
+    }
+
+    private void setupService() {
         service = ServiceGeneratorUtils.createService(SuratService.class);
+    }
 
-        if (mSurat.getStatus().equals(MainConstant.BELUM)) {
-            mActivityMainDetailBinding
-                    .activityMainDetailTextViewValueStatus
-                    .setTextColor(ContextCompat.getColor(this, R.color.error));
-        }
-        if (mSurat.getStatus().equals(MainConstant.PROSSES)) {
-            mActivityMainDetailBinding
-                    .activityMainDetailTextViewValueStatus
-                    .setTextColor(ContextCompat.getColor(this, R.color.warning));
-        }
-        if (mSurat.getStatus().equals(MainConstant.DISPOSISI)) {
-            mActivityMainDetailBinding
-                    .activityMainDetailTextViewValueStatus
-                    .setTextColor(ContextCompat.getColor(this, R.color.info));
-        }
+    private void setupSurat() {
+        mSurat = (Surat) getIntent().getSerializableExtra("surat");
+    }
+
+    private void changeSuratStatusToProses() {
+        Call<SuratList> suratStatusToProsesCall = service.setSuratStatusToProses(user.getId(), mSurat.getId());
+        suratStatusToProsesCall.enqueue(new Callback<SuratList>() {
+            @Override
+            public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
+                SuratList suratList = Objects.requireNonNull(response.body());
+                if (suratList.getData().size() > 0) {
+                    mSurat = suratList.getData().get(0);
+                    mActivityMainDetailBinding.setSurat(mSurat);
+                    if (mSurat.getStatus().equals(MainConstant.PROSSES)) {
+                        mActivityMainDetailBinding.activityMainDetailTextViewValueStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warning));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuratList> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void setupRealm() {
+        realm = Realm.getDefaultInstance();
+        user = realm.where(User.class).findFirst();
+    }
+
+    private void setupButtonSelesai() {
         if (mSurat.getStatus().equals(MainConstant.SELESAI)) {
-            mActivityMainDetailBinding
-                    .activityMainDetailTextViewValueStatus
-                    .setTextColor(ContextCompat.getColor(this, R.color.success));
+            mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setEnabled(false);
+            mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_dark));
         }
+        mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setOnClickListener(v -> changeSuratStatusToSelesai());
+    }
 
+    private void changeSuratStatusToSelesai() {
+        Call<SuratList> suratStatusToSelesaiCall = service.setSuratStatusToSelesai(user.getId(), mSurat.getId());
+        suratStatusToSelesaiCall.enqueue(new Callback<SuratList>() {
+            @Override
+            public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
+                SuratList suratList = Objects.requireNonNull(response.body());
+                if (suratList.getData().size() > 0) {
+                    mSurat = suratList.getData().get(0);
+                    mActivityMainDetailBinding.setSurat(mSurat);
+                    mActivityMainDetailBinding.activityMainDetailTextViewValueStatus
+                            .setText(mSurat.getStatus());
+                    mActivityMainDetailBinding.activityMainDetailTextViewValueStatus
+                            .setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.success));
+
+                    Snackbar snackbar = Snackbar.make(
+                            mActivityMainDetailBinding.activityMainDetailScrollView,
+                            R.string.selesai_info,
+                            Snackbar.LENGTH_LONG);
+
+                    snackbar.setAction("OK", v -> snackbar.dismiss());
+
+                    snackbar.show();
+                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setEnabled(false);
+                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_dark));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuratList> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void setupUploadFile() {
+        mActivityMainDetailBinding.activityMainDetailButtonUploadFile.setOnClickListener(v -> {
+            if (isStoragePermissionGranted()) {
+                openFilePicker();
+            }
+        });
+    }
+
+    private void setupLihatSurat() {
         mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setEnabled(false);
 
         mCustomTabActivityHelper = new CustomTabActivityHelper();
@@ -111,21 +193,35 @@ public class MainDetailActivity extends AppCompatActivity {
         // TODO: Comment this code bellow to make pdf viewer viewe the correct pdf.
         mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
                 openPdfViewer(MainConstant.BASE_URL + "images/gambar_.pdf"));
+    }
 
-        mActivityMainDetailBinding.activityMainDetailButtonUploadFile.setOnClickListener(v -> {
-            if (isStoragePermissionGranted()) {
-                openFilePicker();
-            }
-        });
-        mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setOnClickListener(v -> {
-            setSuratStatus(mActivityMainDetailBinding.getSurat().getId(), "DONE");
-        });
-
+    private void setupActionBar() {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name_detail);
+    }
 
-
+    private void setupColor() {
+        if (mSurat.getStatus().equals(MainConstant.BELUM)) {
+            mActivityMainDetailBinding
+                    .activityMainDetailTextViewValueStatus
+                    .setTextColor(ContextCompat.getColor(this, R.color.error));
+        }
+        if (mSurat.getStatus().equals(MainConstant.PROSSES)) {
+            mActivityMainDetailBinding
+                    .activityMainDetailTextViewValueStatus
+                    .setTextColor(ContextCompat.getColor(this, R.color.warning));
+        }
+        if (mSurat.getStatus().equals(MainConstant.DISPOSISI)) {
+            mActivityMainDetailBinding
+                    .activityMainDetailTextViewValueStatus
+                    .setTextColor(ContextCompat.getColor(this, R.color.info));
+        }
+        if (mSurat.getStatus().equals(MainConstant.SELESAI)) {
+            mActivityMainDetailBinding
+                    .activityMainDetailTextViewValueStatus
+                    .setTextColor(ContextCompat.getColor(this, R.color.success));
+        }
     }
 
     @Override
@@ -313,12 +409,12 @@ public class MainDetailActivity extends AppCompatActivity {
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
     }
 
-    private void setSuratStatus(String id, String status) {
-        Call<SuratList> call = service.setStatus(id, status);
-        Context context = this;
-        call.enqueue(new Callback<SuratList>() {
-            @Override
-            public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
+//    private void setSuratStatus(String id, String status) {
+//        Call<SuratList> call = service.setStatus(id, status);
+//        Context context = this;
+//        call.enqueue(new Callback<SuratList>() {
+//            @Override
+//            public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
 //                Log.d(TAG, "onResponse: Set status successfully: " + Objects.requireNonNull(response.body()).getStatus());
 //                if (Objects.requireNonNull(response.body()).getStatus().equals("OK")) {
 //                    mActivityMainDetailBinding.activityMainDetailButtonStatusSelesai.setEnabled(false);
@@ -329,12 +425,12 @@ public class MainDetailActivity extends AppCompatActivity {
 //                } else {
 //                    Toast.makeText(MainDetailActivity.this, "Gagal", Toast.LENGTH_SHORT).show();
 //                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SuratList> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: Set status failed: " + t.getLocalizedMessage());
-            }
-        });
-    }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<SuratList> call, @NonNull Throwable t) {
+//                Log.d(TAG, "onFailure: Set status failed: " + t.getLocalizedMessage());
+//            }
+//        });
+//    }
 }

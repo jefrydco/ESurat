@@ -34,6 +34,8 @@
     <string name="jabatan">Jabatan</string>
     <string name="id_induk">ID Induk</string>
     <string name="no_hp">NO HP</string>
+    <string name="selesai_info">Status surat berhasil dirubah menjadi \"SELESAI\".</string>
+    <string name="login_failed">Login failed</string>
 
     <!--<string name="re_enter_password">Re-enter Password</string>
             <string name="mobile_number">Mobile Number</string>

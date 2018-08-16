@@ -22,8 +22,12 @@ public interface SuratService {
     Call<SuratList> getListSuratNextPage(@Field("id") String id, @Field("page") Long page);
 
     @FormUrlEncoded
-    @POST("setStatus")
-    Call<SuratList> setStatus(@Field("id") String id, @Field("status") String status);
+    @POST("?action=suratDetail")
+    Call<SuratList> setSuratStatusToProses(@Field("id") String id, @Field("idSurat") String idSurat);
+
+    @FormUrlEncoded
+    @POST("?action=selesai")
+    Call<SuratList> setSuratStatusToSelesai(@Field("id") String id, @Field("idSurat") String idSurat);
 
     @Multipart
     @POST("uploadSurat")

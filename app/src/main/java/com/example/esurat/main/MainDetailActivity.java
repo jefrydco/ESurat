@@ -116,6 +116,9 @@ public class MainDetailActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name_detail);
+
+
     }
 
     @Override

@@ -6,4 +6,18 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always"/>
 
+    <item
+        android:icon="@drawable/ic_more_vert_white_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/more">
+        <menu>
+            <item
+                android:id="@+id/menu_main_account"
+                android:title="@string/account" />
+            <item
+                android:id="@+id/menu_main_logout"
+                android:title="@string/logout" />
+        </menu>
+    </item>
+
 </menu>

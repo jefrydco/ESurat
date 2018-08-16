@@ -13,7 +13,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
-public class User implements Serializable, Parcelable {
+import io.realm.RealmObject;
+
+public class User extends RealmObject implements Serializable, Parcelable {
 
     @SerializedName("id")
     @Expose

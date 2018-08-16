@@ -9,6 +9,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
 import com.example.esurat.R;
 import com.example.esurat.auth.LoginActivity;
@@ -25,6 +30,7 @@ import com.example.esurat.databinding.ActivityMainBinding;
 import com.example.esurat.model.Surat;
 import com.example.esurat.model.SuratList;
 import com.example.esurat.model.User;
+import com.example.esurat.profile.ProfileActivity;
 import com.example.esurat.utils.EndlessRecyclerOnScrollListenerUtils;
 import com.example.esurat.utils.RecyclerItemClickSupportUtils;
 import com.example.esurat.utils.RecyclerViewPositionUtils;
@@ -39,6 +45,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private Animator mAnimator;
     private MainAdapter mMainAdapter;
     User user;
+    Realm realm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,9 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
         setRecyclerViewAdapter();
 
-        user = (User) getIntent().getSerializableExtra(MainConstant.USER);
+        realm = Realm.getDefaultInstance();
+        user = realm.where(User.class).findFirst();
+
+        Log.d(TAG, "onCreate: " + user);
 
         getSuratList();
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name_list);
     }
 
     private void setRecyclerViewAdapter() {
@@ -205,7 +218,31 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        MenuItem menuItemLogout = menu.findItem(R.id.menu_main_logout);
+        menuItemLogout.setOnMenuItemClickListener(item -> {
+            onLogout();
+            return true;
+        });
+
+        MenuItem menuItemAccount = menu.findItem(R.id.menu_main_account);
+        menuItemAccount.setOnMenuItemClickListener(item -> {
+           Intent intentToProfileActivityFromMainActivity = new Intent(this, ProfileActivity.class);
+           startActivity(intentToProfileActivityFromMainActivity);
+           return true;
+        });
+
         return true;
+    }
+
+    private void onLogout() {
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+        Intent intentToLoginActivityFromMainActivity = new Intent(this, LoginActivity.class);
+        startActivity(intentToLoginActivityFromMainActivity);
+        finish();
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     private List<Surat> filterSuratList(List<Surat> mSuratList, String query) {

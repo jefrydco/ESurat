@@ -16,16 +16,19 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
 
 import com.example.esurat.R;
+import com.example.esurat.auth.LoginActivity;
 import com.example.esurat.customtabs.CustomTabActivityHelper;
 import com.example.esurat.databinding.ActivityMainDetailBinding;
 import com.example.esurat.model.Status;
 import com.example.esurat.model.Surat;
 import com.example.esurat.model.SuratList;
+import com.example.esurat.profile.ProfileActivity;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 
 import java.io.File;
@@ -34,6 +37,7 @@ import java.util.Objects;
 
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
+import io.realm.Realm;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -50,12 +54,15 @@ public class MainDetailActivity extends AppCompatActivity {
     private CustomTabActivityHelper mCustomTabActivityHelper;
     SuratService service;
     Surat mSurat;
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivityMainDetailBinding = DataBindingUtil
                 .setContentView(this, R.layout.activity_main_detail);
+
+        realm = Realm.getDefaultInstance();
 
         mSurat = (Surat) getIntent().getSerializableExtra("surat");
         mActivityMainDetailBinding.setSurat(mSurat);
@@ -170,6 +177,26 @@ public class MainDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+
+        MenuItem menuItemLogout = menu.findItem(R.id.menu_detail_logout);
+        menuItemLogout.setOnMenuItemClickListener(item -> {
+            onLogout();
+            return true;
+        });
+
+        MenuItem menuItemAccount = menu.findItem(R.id.menu_detail_account);
+        menuItemAccount.setOnMenuItemClickListener(item -> {
+            Intent intentToProfileActivityFromMainActivity = new Intent(this, ProfileActivity.class);
+            startActivity(intentToProfileActivityFromMainActivity);
+            return true;
+        });
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -184,6 +211,16 @@ public class MainDetailActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         NavUtils.navigateUpFromSameTask(this);
+    }
+
+    private void onLogout() {
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+        Intent intentToLoginActivityFromMainActivity = new Intent(this, LoginActivity.class);
+        startActivity(intentToLoginActivityFromMainActivity);
+        finish();
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     private void openCustomTabs(String url) {

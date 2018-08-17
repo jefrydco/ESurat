@@ -197,7 +197,7 @@ public class MainDetailActivity extends AppCompatActivity {
 
         // TODO: Uncomment this code bellow to make pdf viewer viewe the correct pdf.
         mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-                openPdfViewer(MainConstant.BASE_URL + mSurat.getPathPdf()));
+                openCustomTabs(MainConstant.BASE_URL + mSurat.getPathPdf()));
 
         // TODO: Comment this code bellow to make pdf viewer viewe the correct pdf.
 //        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
@@ -352,11 +352,9 @@ public class MainDetailActivity extends AppCompatActivity {
     }
 
     private void openPdfViewer(String url) {
-        Log.d(TAG, "openPdfViewer: " + url);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
-        Log.d(TAG, "openPdfViewer: " + intent.getData());
-//        startActivity(intent);
+        startActivity(intent);
     }
 
     private void openFilePicker() {

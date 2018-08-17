@@ -2,19 +2,24 @@ package com.example.esurat.main;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.example.esurat.R;
 import com.example.esurat.auth.LoginActivity;
@@ -35,6 +41,11 @@ import com.example.esurat.profile.ProfileActivity;
 import com.example.esurat.utils.ServiceGeneratorUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -44,6 +55,7 @@ import io.realm.Realm;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -195,13 +207,146 @@ public class MainDetailActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Uncomment this code bellow to make pdf viewer viewe the correct pdf.
-        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-                openCustomTabs(MainConstant.BASE_URL + mSurat.getPathPdf()));
-
-        // TODO: Comment this code bellow to make pdf viewer viewe the correct pdf.
+        // TODO: Uncomment this code bellow to make pdf viewer viewed the correct pdf.
 //        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-//                openPdfViewer(MainConstant.BASE_URL + "images/gambar.pdf"));
+//                downloadSurat(MainConstant.BASE_URL + mSurat.getPathPdf()));
+
+        // TODO: Comment this code bellow to make pdf viewer viewed the correct pdf.
+        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
+                downloadSurat(MainConstant.BASE_URL + "images/gambar.pdf"));
+    }
+
+    private void downloadSurat(String url) {
+        SuratService suratService = ServiceGeneratorUtils.createService(SuratService.class);
+        Call<ResponseBody> call = suratService.getSurat(url);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                Log.d(TAG, "onResponse: " + response.body());
+                if(!response.isSuccessful()){
+                    Log.e(TAG, "Something's gone wrong");
+                    // TODO: show error message
+                    Snackbar snackbar = Snackbar.make(
+                            findViewById(R.id.activity_main_detail_scrollView),
+                            R.string.download_surat_info_failed,
+                            Snackbar.LENGTH_LONG);
+                    snackbar.setAction("OK", v -> snackbar.dismiss());
+                    snackbar.show();
+                    return;
+                }
+
+                DownloadFileAsyncTask downloadFileAsyncTask =
+                        new DownloadFileAsyncTask(
+                                MainDetailActivity.this,
+                                mActivityMainDetailBinding,
+                                mSurat.getPathPdf().replace("/images/", ""));
+                downloadFileAsyncTask.execute(Objects.requireNonNull(response.body()).byteStream());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.e(TAG, t.getMessage());
+                Snackbar snackbar = Snackbar.make(
+                        findViewById(R.id.activity_main_detail_scrollView),
+                        R.string.download_surat_info_failed,
+                        Snackbar.LENGTH_LONG);
+                snackbar.setAction("OK", v -> snackbar.dismiss());
+                snackbar.show();
+            }
+        });
+    }
+
+    private static class DownloadFileAsyncTask extends AsyncTask<InputStream, Void, Boolean> {
+
+        final String directoryName = "Surat";
+        final File fileRoot = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS), directoryName);
+        String fileName;
+
+        WeakReference<ActivityMainDetailBinding> mainDetailBindingRef;
+        WeakReference<Context> contextRef;
+
+        DownloadFileAsyncTask(
+                Context contextRef,
+                ActivityMainDetailBinding mainDetailBindingRef,
+                String fileName) {
+            this.contextRef = new WeakReference<>(contextRef);
+            this.mainDetailBindingRef = new WeakReference<>(mainDetailBindingRef);
+            this.fileName = fileName;
+        }
+
+        @Override
+        protected Boolean doInBackground(InputStream... params) {
+            if (!fileRoot.exists()) {
+                boolean result = fileRoot.mkdir();
+                Log.d(TAG, "doInBackground: Directory Created " + result);
+            }
+            InputStream inputStream = params[0];
+            File file = new File(fileRoot, fileName);
+            OutputStream output = null;
+            try {
+                output = new FileOutputStream(file);
+
+                byte[] buffer = new byte[1024]; // or other buffer size
+                int read;
+
+                Log.d(TAG, "Attempting to write to: " + fileRoot + "/" + fileName);
+                while ((read = inputStream.read(buffer)) != -1) {
+                    output.write(buffer, 0, read);
+                    Log.v(TAG, "Writing to buffer to output stream.");
+                }
+                Log.d(TAG, "Flushing output stream.");
+                output.flush();
+                Log.d(TAG, "Output flushed.");
+            } catch (IOException e) {
+                Log.e(TAG, "IO Exception: " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            } finally {
+                try {
+                    if (output != null) {
+                        output.close();
+                        Log.d(TAG, "Output stream closed sucessfully.");
+                    }
+                    else{
+                        Log.d(TAG, "Output stream is null");
+                    }
+                } catch (IOException e){
+                    Log.e(TAG, "Couldn't close output stream: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+
+            Log.d(TAG, "Download success: " + result);
+            // TODO: show a snackbar or a toast
+            if (result) {
+                File file = new File(fileRoot, fileName);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                Uri fileUri = FileProvider.getUriForFile(
+                        contextRef.get(),
+                        contextRef.get().getApplicationContext()
+                                .getPackageName() + ".provider", file);
+                intent.setDataAndType(fileUri, "application/pdf");
+                contextRef.get().startActivity(intent);
+            } else {
+                Snackbar snackbar = Snackbar.make(
+                        mainDetailBindingRef.get().activityMainDetailScrollView,
+                        R.string.download_surat_info_failed,
+                        Snackbar.LENGTH_LONG);
+
+                snackbar.setAction("OK", v -> snackbar.dismiss());
+
+                snackbar.show();
+            }
+        }
     }
 
     private void setupActionBar() {

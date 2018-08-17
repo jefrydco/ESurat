@@ -38,8 +38,11 @@
     <string name="selesai_info_success">Status surat berhasil dirubah menjadi selesai.</string>
     <string name="selesai_info_failed">Status surat gagal dirubah menjadi selesai.</string>
     <string name="login_failed">Login failed</string>
-    <string name="upload_balasan_info_success">Surat balasan berhasil diupload</string>
-    <string name="upload_balasan_info_failed">Surat balasan gagal diupload</string>
+    <string name="upload_balasan_info_success">Surat balasan berhasil diunggah</string>
+    <string name="upload_balasan_info_failed">Surat balasan gagal diunggah</string>
+
+    <string name="download_surat_info_success">Surat berhasil diunduh</string>
+    <string name="download_surat_info_failed">Surat tidak dapat diunduh</string>
 
     <!--<string name="re_enter_password">Re-enter Password</string>
             <string name="mobile_number">Mobile Number</string>

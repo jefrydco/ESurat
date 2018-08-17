@@ -196,12 +196,12 @@ public class MainDetailActivity extends AppCompatActivity {
         });
 
         // TODO: Uncomment this code bellow to make pdf viewer viewe the correct pdf.
-//        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-//                openCustomTabs(MainConstant.BASE_URL + mSurat.getPathPdf()));
+        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
+                openPdfViewer(MainConstant.BASE_URL + mSurat.getPathPdf()));
 
         // TODO: Comment this code bellow to make pdf viewer viewe the correct pdf.
-        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-                openPdfViewer(MainConstant.BASE_URL + "images/gambar_.pdf"));
+//        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
+//                openPdfViewer(MainConstant.BASE_URL + "images/gambar.pdf"));
     }
 
     private void setupActionBar() {
@@ -352,9 +352,11 @@ public class MainDetailActivity extends AppCompatActivity {
     }
 
     private void openPdfViewer(String url) {
+        Log.d(TAG, "openPdfViewer: " + url);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
-        startActivity(intent);
+        Log.d(TAG, "openPdfViewer: " + intent.getData());
+//        startActivity(intent);
     }
 
     private void openFilePicker() {

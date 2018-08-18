@@ -4,6 +4,9 @@
     <string name="app_name_detail">Detail Surat</string>
     <string name="app_name_account">Akun</string>
 
+    <string name="app_name_pdam">PDAM Taman Sari</string>
+    <string name="app_name_kota">Kota Madiun</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login">Login</string>

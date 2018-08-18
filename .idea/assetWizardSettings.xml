@@ -34,8 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="2196f3" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/pdam-white-logo-only.png" />
+                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/Logo PDAM Tirta Taman Sari.gif" />
                                     </map>
                                   </option>
                                 </PersistentState>

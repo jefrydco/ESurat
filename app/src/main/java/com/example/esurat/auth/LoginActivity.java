@@ -63,9 +63,9 @@ public class LoginActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         }
 
-        _usernameText.setText("dirut");
-        _passwordText.setText("dirut");
-        _loginButton.performClick();
+//        _usernameText.setText("dirut");
+//        _passwordText.setText("dirut");
+//        _loginButton.performClick();
 
         _loginButton.setOnClickListener(v -> login());
     }

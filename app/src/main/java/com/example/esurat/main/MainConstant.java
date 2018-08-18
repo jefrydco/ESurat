@@ -12,8 +12,8 @@ public class MainConstant {
     public static final String DISPOSISI = "DISPOSISI";
 
 // Uncomment for Database local
-    public static final String BASE_URL = "http://10.0.2.2:8080/esurat-dev/";
+//    public static final String BASE_URL = "http://10.0.2.2:8080/esurat-dev/";
 
 //  Uncomment for PDAM local
-//    public static final String BASE_URL = "http://192.168.9.6/esurat-dev/";
+    public static final String BASE_URL = "http://intranet.pdamkotamadiun.com:2000/esurat-dev/";
 }

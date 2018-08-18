@@ -208,12 +208,16 @@ public class MainDetailActivity extends AppCompatActivity {
         });
 
         // TODO: Uncomment this code bellow to make pdf viewer viewed the correct pdf.
-//        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-//                downloadSurat(MainConstant.BASE_URL + mSurat.getPathPdf()));
+        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
+        {
+            if (isStoragePermissionGranted()) {
+                openCustomTabs(MainConstant.BASE_URL + mSurat.getPathPdf());
+            }
+        });
 
         // TODO: Comment this code bellow to make pdf viewer viewed the correct pdf.
-        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
-                downloadSurat(MainConstant.BASE_URL + "images/gambar.pdf"));
+//        mActivityMainDetailBinding.activityMainDetailButtonLihatSurat.setOnClickListener(v ->
+//                downloadSurat(MainConstant.BASE_URL + "images/gambar.pdf"));
     }
 
     private void downloadSurat(String url) {

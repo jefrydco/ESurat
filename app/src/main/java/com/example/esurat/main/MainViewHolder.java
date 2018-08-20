@@ -24,9 +24,10 @@ public class MainViewHolder extends SortedListAdapter.ViewHolder<Surat> {
 
     @Override
     protected void performBind(@NonNull Surat item) {
-//        Log.d(TAG, "performBind: " + getAdapterPosition());
-        if (getAdapterPosition() % 2 == 1) {
-            mItemMainBinding.itemMainCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.iron));
+        if (getLayoutPosition() % 2 == 1) {
+            mItemMainBinding.itemMainCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_white));
+        } else {
+            mItemMainBinding.itemMainCardView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
         }
         if (item.getStatus().equals(MainConstant.BELUM)) {
             mItemMainBinding.itemMainTextViewStatus.setTextColor(ContextCompat.getColor(context, R.color.error));

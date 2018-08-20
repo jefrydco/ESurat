@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<SuratList> call, @NonNull Response<SuratList> response) {
                         mSuratList.addAll(Objects.requireNonNull(response.body()).getData());
-                        mMainAdapter.edit().removeAll().replaceAll(mSuratList).commit();
+                        mMainAdapter.edit().replaceAll(mSuratList).commit();
                     }
 
                     @Override

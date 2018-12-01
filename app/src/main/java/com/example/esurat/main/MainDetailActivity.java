@@ -2,7 +2,6 @@ package com.example.esurat.main;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,28 +16,27 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.example.esurat.R;
 import com.example.esurat.auth.LoginActivity;
 import com.example.esurat.customtabs.CustomTabActivityHelper;
 import com.example.esurat.databinding.ActivityMainDetailBinding;
-import com.example.esurat.model.Status;
 import com.example.esurat.model.Surat;
 import com.example.esurat.model.SuratList;
 import com.example.esurat.model.User;
 import com.example.esurat.profile.ProfileActivity;
 import com.example.esurat.utils.ServiceGeneratorUtils;
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,6 +45,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import droidninja.filepicker.FilePickerBuilder;
@@ -507,10 +506,22 @@ public class MainDetailActivity extends AppCompatActivity {
     }
 
     private void openFilePicker() {
-        FilePickerBuilder.getInstance()
-                .setMaxCount(1)
-                .setActivityTheme(R.style.FilePickerAppTheme)
-                .pickFile(this);
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+        properties.extensions = new String[] {"pdf"};
+        FilePickerDialog dialog = new FilePickerDialog(MainDetailActivity.this,properties);
+        dialog.setTitle("Select a File");
+        dialog.show();
+        dialog.setDialogSelectionListener(files -> {
+            Log.d(TAG, "onSelectedFilePaths: " + Arrays.toString(files));
+            uploadFile(files[0]);
+            //files is the array of the paths of files selected by the Application User.
+        });
+//        FilePickerBuilder.getInstance()
+//                .setMaxCount(1)
+//                .setActivityTheme(R.style.FilePickerAppTheme)
+//                .pickFile(this);
     }
 
     public  boolean isStoragePermissionGranted() {

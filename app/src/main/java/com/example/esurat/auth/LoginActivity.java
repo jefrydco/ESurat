@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 R.style.AppTheme_Dark_Dialog);
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setMessage("Authenticating...");
+        mProgressDialog.setCancelable(false);
         mProgressDialog.show();
 
         String username = _usernameText.getText().toString();
